@@ -15,10 +15,13 @@ public class Unit : MonoBehaviour
     public int Strength = 0;
     public UnitFightState FightState = Unit.UnitFightState.None;
     public int FightDifference = 0;
+    public float LastHealTime = 0;
 
     GameObject spriteGO;
     SpriteRenderer sprite;
     Animator animator;
+    Transform strengthBar;
+    SpriteRenderer strengthRenderer;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,8 @@ public class Unit : MonoBehaviour
         sprite = spriteGO.GetComponent<SpriteRenderer>();
         animator = spriteGO.GetComponent<Animator>();
         animator.speed = FixedValues.AnimationSpeedHolding;
+        strengthBar = spriteGO.transform.Find("strengthBar");
+        strengthRenderer = strengthBar.Find("Square").GetComponent<SpriteRenderer>();
     }
 
     public void ToNextState()
@@ -63,10 +68,43 @@ public class Unit : MonoBehaviour
         transform.position = new Vector2(originalX + groundTaken*advanceDirection, transform.position.y);
         groundTakenPercent = (int)Mathf.Round((groundTaken / FixedValues.GetFieldSize()) * 100);
     }
-
-    public void UpdateStrengthAdvancing(AnimationCurve curve)
+    public void UpdateStrengthHolding(float strength)
     {
-        Strength = (int) Mathf.Round(FixedValues.BaseUnitStrength * curve.Evaluate(groundTakenPercent * 0.01f));
+        if (Strength < strength)
+        {
+            Debug.Log("^ " + Strength);
+            Strength += FixedValues.HoldingStrengthChangeRate;
+        }
+        else if (Strength > strength)
+        {
+            Debug.Log("V " + Strength);
+            Strength -= FixedValues.HoldingStrengthChangeRate;
+        }
+        if (Strength > strength) Strength = (int)strength;
+        UpdateStrengthBar();
+    }
+    public void UpdateStrengthAdvancing(AnimationCurve curve, float strength, float traversed)
+    {
+        var traversedNormal = (traversed / FixedValues.GetFieldSize());
+        Debug.Log("!!!! " + traversedNormal);
+        Strength = (int) Mathf.Round(strength * curve.Evaluate(traversedNormal));
+        UpdateStrengthBar();
+    }
+    void UpdateStrengthBar()
+    {
+        strengthBar.localScale = new Vector3(Strength * .01f, 1, 1);
+        if (strengthBar.localScale.x <= 1.0f)
+        {
+            strengthRenderer.color = Color.red;
+        }
+        else if (strengthBar.localScale.x >= 1.35f)
+        {
+            strengthRenderer.color = Color.white;
+        }
+        else
+        {
+            strengthRenderer.color = Color.green;
+        }
     }
 
     // Update is called once per frame

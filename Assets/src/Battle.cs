@@ -17,6 +17,7 @@ public class Battle : MonoBehaviour
     GameObject unitPrefab;
     GameObject trumpetPrefab;
     public float battleInterval { get; protected set; } = 0.05f;
+    public float timeElapsed { get; protected set; } = 0;
     Coroutine mainCoroutine;
     private void Awake()
     {
@@ -83,6 +84,7 @@ public class Battle : MonoBehaviour
     {
         while (true)
         {
+            timeElapsed += battleInterval;
             if (isFirstFrame)
             {
                 isFirstFrame = false;

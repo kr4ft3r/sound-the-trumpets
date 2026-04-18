@@ -12,6 +12,9 @@ public class Regiment
     Trumpet trumpet;
     float startX;
     float speed = FixedValues.BaseUnitSpeed;
+    float advancedFromX; // Last position when advance order was given, in ground taken, for determining traversed
+    float unitStrength = FixedValues.BaseUnitStrength;
+
     public List<IRegimentUpgrade> Upgrades = new List<IRegimentUpgrade>();
 
     public float BonusTrumpetCooldown;
@@ -97,6 +100,9 @@ public class Regiment
 
         switch (unit.State)
         {
+            case Unit.UnitState.Holding:
+                UpdateHolding(battle);
+                break;
             case Unit.UnitState.Advancing:
                 UpdateAdvancing(battle);
                 break;
@@ -105,11 +111,18 @@ public class Regiment
                 break;
         }
     }
+    void UpdateHolding(Battle battle) {
+        if (unit.Strength != unitStrength && battle.timeElapsed > unit.LastHealTime+1f)//update per second
+        {
+            unit.UpdateStrengthHolding(unitStrength);
+            unit.LastHealTime = battle.timeElapsed;
+        }
+    }
     void UpdateAdvancing(Battle battle)
     {
         unit.groundTaken += battle.battleInterval * speed;
         unit.UpdatePosition(startX, advanceDirection);
-        unit.UpdateStrengthAdvancing(battle.InfantryStrengthCurve);
+        unit.UpdateStrengthAdvancing(battle.InfantryStrengthCurve, unitStrength, unit.groundTaken - advancedFromX);
     }
     void UpdateFighting(Battle battle)
     {
@@ -140,6 +153,7 @@ public class Regiment
         {
             case Unit.UnitState.Holding:
                 unit.NextState = Unit.UnitState.Advancing;
+                advancedFromX = unit.groundTaken;
                 // TODO sounds
                 break;
             case Unit.UnitState.Advancing:
