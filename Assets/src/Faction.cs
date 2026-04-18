@@ -9,10 +9,13 @@ public class Faction
     public int ID;
     public FactionSide Side;
     public Regiment[] Regiments;
+    public bool IsHumanPlayer = false;
     public Faction(int id, FactionSide side)
     {
         ID = id;
         this.Side = side;
+
+        if (id == 0) IsHumanPlayer = true; // TODO don't force here
 
         InitRegiments();
     }
@@ -23,5 +26,9 @@ public class Faction
             var reg = new Regiment(i + 1, FixedValues.GetFactionColor(ID));
             Regiments[i] = reg;
         }
+    }
+    public void UpdateBattleState()
+    {
+
     }
 }

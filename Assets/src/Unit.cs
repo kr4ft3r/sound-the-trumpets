@@ -7,6 +7,8 @@ public class Unit : MonoBehaviour
     public enum UnitState { Holding, Advancing, Fighting, Pursuing, Retreating  };
 
     public UnitState State = UnitState.Holding;
+    public UnitState NextState = UnitState.Holding;
+    public float NextStateTimer = 0.00f;
 
     GameObject spriteGO;
     SpriteRenderer sprite;
@@ -20,15 +22,32 @@ public class Unit : MonoBehaviour
         animator.speed = FixedValues.AnimationSpeedHolding;
     }
 
-    public void Advance()
+    public void ToNextState()
+    {
+        NextStateTimer = 0.00f;
+        State = NextState;
+        switch (State)
+        {
+            case UnitState.Holding:
+                StartHold();
+                break;
+            case UnitState.Advancing:
+                StartAdvance();
+                break;
+            case UnitState.Fighting:
+                StartFight();
+                break;
+        }
+    }
+    void StartAdvance()
     {
         animator.speed = FixedValues.AnimationSpeedMoving;
     }
-    public void Hold()
+    void StartHold()
     {
         animator.speed = FixedValues.AnimationSpeedHolding;
     }
-    public void Fight()
+    void StartFight()
     {
         animator.speed = FixedValues.AnimationSpeedFighting;
     }
