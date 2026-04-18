@@ -11,7 +11,7 @@ public class Regiment
     Unit unit;
     Trumpet trumpet;
     float startX;
-    float speed = .25f;
+    float speed = FixedValues.BaseUnitSpeed;
     public Regiment(int order, Color color, float advanceDirection)
     {
         Order = order;
@@ -35,6 +35,25 @@ public class Regiment
         startX = unit.transform.position.x;
         Debug.LogWarning("Remember to implement Undeploy");
     }
+    public void Undeploy()
+    {
+        unit = null;
+        trumpet = null;
+        Battle.SignalSent -= OnSignalSent;
+    }
+    public void Engage()
+    {
+        unit.NextState = Unit.UnitState.Fighting;
+        unit.ToNextState();
+    }
+    public bool IsEngaged()
+    {
+        return unit.State == Unit.UnitState.Fighting;
+    }
+    public float GetGroundTaken()
+    {
+        return unit.groundTaken;
+    }
     public void UpdateBattleState(Battle battle)
     {
         // Update timers
@@ -56,7 +75,8 @@ public class Regiment
             }
         }
 
-        switch (unit.State) {
+        switch (unit.State)
+        {
             case Unit.UnitState.Advancing:
                 UpdateAdvancing(battle);
                 break;
@@ -73,12 +93,6 @@ public class Regiment
     void UpdateFighting()
     {
         //TODO
-    }
-    public void Undeploy()
-    {
-        unit = null;
-        trumpet = null;
-        Battle.SignalSent -= OnSignalSent;
     }
 
     void OnSignalSent(Regiment regiment, Faction faction, bool isSpecial)

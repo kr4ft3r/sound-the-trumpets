@@ -69,12 +69,19 @@ public class Battle : MonoBehaviour
         }
     }
 
+    bool isFirstFrame = true;
     IEnumerator MainUpdate()
     {
         while (true)
         {
+            if (isFirstFrame)
+            {
+                isFirstFrame = false;
+                yield return new WaitForSeconds(battleInterval);
+            }
             UpdateFaction(BlueFaction);
             UpdateFaction(RedFaction);
+            UpdateCombats();
 
             yield return new WaitForSeconds(battleInterval);
         }
@@ -83,9 +90,28 @@ public class Battle : MonoBehaviour
     void UpdateFaction(Faction faction)
     {
         faction.UpdateBattleState();
-        foreach (var reg in faction.Regiments)
+        for (int i = 0; i < faction.Regiments.Count(); i++)
         {
+            var reg = faction.Regiments[i];
             reg.UpdateBattleState(this);
+        }
+    }
+
+    void UpdateCombats()
+    {
+        for (int i = 0; i < FixedValues.RegimentsPerFaction; i++)
+        {
+            var leftReg = BlueFaction.Regiments[i];
+            var rightReg = RedFaction.Regiments[i];
+            if (!leftReg.IsEngaged() || !rightReg.IsEngaged()) // whatever
+            {
+                if (UnitsAreWithinEngagementDistance(leftReg, rightReg))
+                {
+                    Debug.Log("Start engagement");
+                    leftReg.Engage();
+                    rightReg.Engage();
+                }
+            }
         }
     }
 
@@ -127,4 +153,10 @@ public class Battle : MonoBehaviour
             SignalSent?.Invoke(BlueFaction.Regiments[3], BlueFaction, Input.GetKeyUp(KeyCode.RightShift));
         }
     }
+
+    public bool UnitsAreWithinEngagementDistance(Regiment leftReg, Regiment rightReg) {
+        return Mathf.Abs(leftReg.GetGroundTaken() - (FixedValues.GetFieldSize() - rightReg.GetGroundTaken())) <= FixedValues.EngagementDistance;
+    }
+
+    //public Regiment GetOpposingRegiment
 }
