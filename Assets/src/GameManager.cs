@@ -5,49 +5,36 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Faction BlueFaction;
-    public Faction RedFaction;
+    Faction blueFaction;
+    Faction redFaction;
 
-    GameObject unitPrefab;
+    Battle battle;
+
     private void Awake()
     {
-        unitPrefab = Resources.Load<GameObject>("Prefabs/Unit");
-
-        BlueFaction = new Faction(0, Faction.FactionSide.Left);
-        RedFaction = new Faction(1, Faction.FactionSide.Right);
 
         // TODO remove test calls
-
-        InitBattleScreen();
+        InitFactions();
     }
-    public void InitBattleScreen()
+    public void InitFactions()
     {
-        SpawnFaction(BlueFaction);
-        SpawnFaction(RedFaction);
+        blueFaction = new Faction(0, Faction.FactionSide.Left);
+        redFaction = new Faction(1, Faction.FactionSide.Right);
     }
 
-    void SpawnFaction(Faction faction)
+    public void StartBattle()
     {
-        float xMod = faction.Side == Faction.FactionSide.Left ? -1f : 1f;
-        float downDir = -1;
-        for (int i = 0; i < faction.Regiments.Count(); i++)
-        {
-            var reg = faction.Regiments[i];
-            GameObject unit = GameObject.Instantiate(unitPrefab);
-            var spr = unit.transform.Find("sprite").GetComponent<SpriteRenderer>();
-            spr.color = reg.Color;
-            spr.flipX = faction.Side == Faction.FactionSide.Right;
-            unit.transform.position = new Vector2(
-                FixedValues.UnitSlotDistanceFromCenterX * xMod,
-                FixedValues.FirstUnitSlotPositionY + (i * FixedValues.UnitColumnDistance) * downDir
-                );
-        }
+        if (battle) Destroy(battle);
+        battle = gameObject.AddComponent<Battle>();
+        battle.BlueFaction = blueFaction;
+        battle.RedFaction = redFaction;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        // TODO remove test calls
+        StartBattle();
     }
 
     // Update is called once per frame
