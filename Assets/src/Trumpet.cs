@@ -22,7 +22,6 @@ public class Trumpet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void Blow(float enableTime)
@@ -43,5 +42,11 @@ public class Trumpet : MonoBehaviour
         State = TrumpetState.Ready;
         animator.SetTrigger("TrumpetAvailable");
         EnableTimer = 0.00f;
+    }
+    public void Deactivate()
+    {
+        Debug.Log("Deactivate");
+        State = TrumpetState.NotReady;
+        animator.SetTrigger("TrumpetNotAvailable");
     }
 }

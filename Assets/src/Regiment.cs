@@ -14,8 +14,7 @@ public class Regiment
     float speed = FixedValues.BaseUnitSpeed;
     public List<IRegimentUpgrade> Upgrades = new List<IRegimentUpgrade>();
 
-    public float BonusTrumpetCooldown = 0;
-    public float BonusTrumpetHeard = 0;
+    public float BonusTrumpetCooldown;
 
     public Regiment(int order, Color color, float advanceDirection)
     {
@@ -50,6 +49,7 @@ public class Regiment
     {
         unit.NextState = Unit.UnitState.Fighting;
         unit.ToNextState();
+        trumpet.Deactivate();
     }
     public bool IsEngaged()
     {
@@ -59,6 +59,21 @@ public class Regiment
     {
         return unit.groundTaken;
     }
+    public int GetCurrentStrength()
+    {
+        return unit.Strength;
+    }
+    public void Pursue(int diff)
+    {
+        unit.FightState = Unit.UnitFightState.Pursuing;
+        unit.FightDifference = diff;
+    }
+    public void Retreat(int diff)
+    {
+        unit.FightState = Unit.UnitFightState.Retreating;
+        unit.FightDifference = diff;
+    }
+
     public void UpdateBattleState(Battle battle)
     {
         // Update timers
@@ -86,7 +101,7 @@ public class Regiment
                 UpdateAdvancing(battle);
                 break;
             case Unit.UnitState.Fighting:
-                UpdateFighting();
+                UpdateFighting(battle);
                 break;
         }
     }
@@ -94,10 +109,18 @@ public class Regiment
     {
         unit.groundTaken += battle.battleInterval * speed;
         unit.UpdatePosition(startX, advanceDirection);
+        unit.UpdateStrengthAdvancing(battle.InfantryStrengthCurve);
     }
-    void UpdateFighting()
+    void UpdateFighting(Battle battle)
     {
-        //TODO
+        if (unit.FightState == Unit.UnitFightState.Retreating)
+        {
+            unit.groundTaken -= battle.battleInterval * speed * .5f;
+        } else if (unit.FightState == Unit.UnitFightState.Pursuing)
+        {
+            unit.groundTaken += battle.battleInterval * speed * .5f;
+        }
+        unit.UpdatePosition(startX, advanceDirection);
     }
 
     void OnSignalSent(Regiment regiment, Faction faction, bool isSpecial)

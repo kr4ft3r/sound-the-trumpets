@@ -243,6 +243,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9fd393629583a04ebab3eba73909fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InfantryStrengthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 2.5735478
+      outSlope: 2.5735478
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.0774262
+    - serializedVersion: 3
+      time: 0.33107564
+      value: 1.5090706
+      inSlope: -0.11160047
+      outSlope: -0.11160047
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.07675859
+    - serializedVersion: 3
+      time: 0.37607706
+      value: 1.2930002
+      inSlope: -1.3491496
+      outSlope: -1.3491496
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.5045471
+      inSlope: -1.2637026
+      outSlope: -1.2637026
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &1996557083
 Transform:
   m_ObjectHideFlags: 0

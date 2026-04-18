@@ -9,6 +9,8 @@ public class Battle : MonoBehaviour
     public static System.Action<Regiment, Faction, bool> SignalSent;
     public static System.Action<Regiment, Faction, bool> SignalReceived;
 
+    public AnimationCurve InfantryStrengthCurve;
+
     public Faction BlueFaction;
     public Faction RedFaction;
 
@@ -38,10 +40,17 @@ public class Battle : MonoBehaviour
         {
             HandleBluePlayerHumanInput();
         }
-        
+        else
+        {
+            HandleComputerPlayerInput(BlueFaction);
+        }
+
         if (RedFaction.IsHumanPlayer)
         {
             HandleRedPlayerHumanInput();
+        } else
+        {
+            HandleComputerPlayerInput(RedFaction);
         }
     }
 
@@ -103,13 +112,33 @@ public class Battle : MonoBehaviour
         {
             var leftReg = BlueFaction.Regiments[i];
             var rightReg = RedFaction.Regiments[i];
+            bool engagementActive = false;
             if (!leftReg.IsEngaged() || !rightReg.IsEngaged()) // whatever
             {
                 if (UnitsAreWithinEngagementDistance(leftReg, rightReg))
                 {
                     Debug.Log("Start engagement");
+                    engagementActive = true;
                     leftReg.Engage();
                     rightReg.Engage();
+
+                    // And now, the actual combat, strength resolved in advance
+                    int leftRelativeDiff = (int)(leftReg.GetCurrentStrength() - rightReg.GetCurrentStrength());
+                    if (leftRelativeDiff > 0)
+                    {
+                        leftReg.Pursue(Mathf.Abs(leftRelativeDiff));
+                        rightReg.Retreat(Mathf.Abs(leftRelativeDiff));
+                    }
+                    else if (leftRelativeDiff < 0)
+                    {
+                        leftReg.Retreat(Mathf.Abs(leftRelativeDiff));
+                        rightReg.Pursue(Mathf.Abs(leftRelativeDiff));
+                    }
+                    else
+                    {
+                        // Stalemate
+                    }
+                    Debug.Log(leftRelativeDiff);
                 }
             }
         }
@@ -138,20 +167,31 @@ public class Battle : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Alpha7))
         {
-            SignalSent?.Invoke(BlueFaction.Regiments[0], BlueFaction, Input.GetKeyUp(KeyCode.RightShift));
+            SignalSent?.Invoke(RedFaction.Regiments[0], RedFaction, Input.GetKeyUp(KeyCode.RightShift));
         }
         else if (Input.GetKeyUp(KeyCode.Alpha8))
         {
-            SignalSent?.Invoke(BlueFaction.Regiments[1], BlueFaction, Input.GetKeyUp(KeyCode.RightShift));
+            SignalSent?.Invoke(RedFaction.Regiments[1], RedFaction, Input.GetKeyUp(KeyCode.RightShift));
         }
         else if (Input.GetKeyUp(KeyCode.Alpha9))
         {
-            SignalSent?.Invoke(BlueFaction.Regiments[2], BlueFaction, Input.GetKeyUp(KeyCode.RightShift));
+            SignalSent?.Invoke(RedFaction.Regiments[2], RedFaction, Input.GetKeyUp(KeyCode.RightShift));
         }
         else if (Input.GetKeyUp(KeyCode.Alpha0))
         {
-            SignalSent?.Invoke(BlueFaction.Regiments[3], BlueFaction, Input.GetKeyUp(KeyCode.RightShift));
+            SignalSent?.Invoke(RedFaction.Regiments[3], RedFaction, Input.GetKeyUp(KeyCode.RightShift));
         }
+    }
+
+    void HandleComputerPlayerInput(Faction faction)
+    {
+        faction.TimeSinceDecision += Time.deltaTime;
+        if (faction.TimeSinceDecision < 2 || Random.Range(0f, 1.0f) < 0.9f) 
+        {
+            return;
+        }
+
+        faction.TimeSinceDecision = 0;
     }
 
     public bool UnitsAreWithinEngagementDistance(Regiment leftReg, Regiment rightReg) {

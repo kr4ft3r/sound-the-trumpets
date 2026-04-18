@@ -5,12 +5,16 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public enum UnitState { Holding, Advancing, Fighting, Pursuing, Retreating  };
+    public enum UnitFightState { None, Pursuing, Retreating, Stalemate}
 
     public UnitState State = UnitState.Holding;
     public UnitState NextState = UnitState.Holding;
     public float NextStateTimer = 0.00f;
     public float groundTaken = 0;
     public int groundTakenPercent = 0;
+    public int Strength = 0;
+    public UnitFightState FightState = Unit.UnitFightState.None;
+    public int FightDifference = 0;
 
     GameObject spriteGO;
     SpriteRenderer sprite;
@@ -58,6 +62,11 @@ public class Unit : MonoBehaviour
     {
         transform.position = new Vector2(originalX + groundTaken*advanceDirection, transform.position.y);
         groundTakenPercent = (int)Mathf.Round((groundTaken / FixedValues.GetFieldSize()) * 100);
+    }
+
+    public void UpdateStrengthAdvancing(AnimationCurve curve)
+    {
+        Strength = (int) Mathf.Round(FixedValues.BaseUnitStrength * curve.Evaluate(groundTakenPercent * 0.01f));
     }
 
     // Update is called once per frame

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public AnimationCurve InfantryStrengthCurve;
+
     Faction blueFaction;
     Faction redFaction;
 
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
         battle = gameObject.AddComponent<Battle>();
         battle.BlueFaction = blueFaction;
         battle.RedFaction = redFaction;
+        battle.InfantryStrengthCurve = InfantryStrengthCurve;
     }
 
     // Start is called before the first frame update
