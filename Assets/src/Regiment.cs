@@ -80,6 +80,7 @@ public class Regiment
         if (regiment != this) return;
         if (unit.State == Unit.UnitState.Fighting || unit.State == Unit.UnitState.Pursuing || unit.State == Unit.UnitState.Retreating) return;
         if (trumpet.State != Trumpet.TrumpetState.Ready) return; // TODO funny sound?
+        Debug.Log("Signal for faction " + faction.ID + " regiment order " + regiment.Order);
 
         if (isSpecial)
         {
@@ -97,6 +98,7 @@ public class Regiment
                 unit.NextState = Unit.UnitState.Holding;
                 break;
         }
+        unit.NextStateTimer = FixedValues.BaseTrumpetDelay;
         trumpet.Blow(FixedValues.BaseTrumpetCooldown);//TODO better
     }
 }

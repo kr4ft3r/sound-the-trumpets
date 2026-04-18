@@ -91,38 +91,38 @@ public class Battle : MonoBehaviour
 
     void HandleBluePlayerHumanInput()
     {
-        if (Input.GetKeyUp(KeyCode.Keypad1))
+        if (Input.GetKeyUp(KeyCode.Alpha1))
         {
             SignalSent?.Invoke(BlueFaction.Regiments[0], BlueFaction, Input.GetKeyUp(KeyCode.LeftShift));
         }
-        else if (Input.GetKeyUp(KeyCode.Keypad2))
+        else if (Input.GetKeyUp(KeyCode.Alpha2))
         {
             SignalSent?.Invoke(BlueFaction.Regiments[1], BlueFaction, Input.GetKeyUp(KeyCode.LeftShift));
         }
-        else if (Input.GetKeyUp(KeyCode.Keypad3))
+        else if (Input.GetKeyUp(KeyCode.Alpha3))
         {
             SignalSent?.Invoke(BlueFaction.Regiments[2], BlueFaction, Input.GetKeyUp(KeyCode.LeftShift));
         }
-        else if (Input.GetKeyUp(KeyCode.Keypad4))
+        else if (Input.GetKeyUp(KeyCode.Alpha4))
         {
             SignalSent?.Invoke(BlueFaction.Regiments[3], BlueFaction, Input.GetKeyUp(KeyCode.LeftShift));
         }
     }
     void HandleRedPlayerHumanInput()
     {
-        if (Input.GetKeyUp(KeyCode.Keypad7))
+        if (Input.GetKeyUp(KeyCode.Alpha7))
         {
             SignalSent?.Invoke(BlueFaction.Regiments[0], BlueFaction, Input.GetKeyUp(KeyCode.RightShift));
         }
-        else if (Input.GetKeyUp(KeyCode.Keypad8))
+        else if (Input.GetKeyUp(KeyCode.Alpha8))
         {
             SignalSent?.Invoke(BlueFaction.Regiments[1], BlueFaction, Input.GetKeyUp(KeyCode.RightShift));
         }
-        else if (Input.GetKeyUp(KeyCode.Keypad9))
+        else if (Input.GetKeyUp(KeyCode.Alpha9))
         {
             SignalSent?.Invoke(BlueFaction.Regiments[2], BlueFaction, Input.GetKeyUp(KeyCode.RightShift));
         }
-        else if (Input.GetKeyUp(KeyCode.Keypad0))
+        else if (Input.GetKeyUp(KeyCode.Alpha0))
         {
             SignalSent?.Invoke(BlueFaction.Regiments[3], BlueFaction, Input.GetKeyUp(KeyCode.RightShift));
         }
