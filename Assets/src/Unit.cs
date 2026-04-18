@@ -9,6 +9,8 @@ public class Unit : MonoBehaviour
     public UnitState State = UnitState.Holding;
     public UnitState NextState = UnitState.Holding;
     public float NextStateTimer = 0.00f;
+    public float groundTaken = 0;
+    public int groundTakenPercent = 0;
 
     GameObject spriteGO;
     SpriteRenderer sprite;
@@ -50,6 +52,12 @@ public class Unit : MonoBehaviour
     void StartFight()
     {
         animator.speed = FixedValues.AnimationSpeedFighting;
+    }
+
+    public void UpdatePosition(float originalX, float advanceDirection)
+    {
+        transform.position = new Vector2(originalX + groundTaken*advanceDirection, transform.position.y);
+        groundTakenPercent = (int)Mathf.Round((groundTaken / FixedValues.GetFieldSize()) * 100);
     }
 
     // Update is called once per frame

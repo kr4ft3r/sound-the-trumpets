@@ -6,13 +6,17 @@ public class Regiment
 {
     public readonly int Order;
     public Color Color;
+    float advanceDirection;
     
     Unit unit;
     Trumpet trumpet;
-    public Regiment(int order, Color color)
+    float startX;
+    float speed = .25f;
+    public Regiment(int order, Color color, float advanceDirection)
     {
         Order = order;
         Color = color;
+        this.advanceDirection = advanceDirection;
     }
     public string GetName()
     {
@@ -28,6 +32,7 @@ public class Regiment
         this.unit = unit;
         this.trumpet = trumpet;
         Battle.SignalSent += OnSignalSent;
+        startX = unit.transform.position.x;
         Debug.LogWarning("Remember to implement Undeploy");
     }
     public void UpdateBattleState(Battle battle)
@@ -53,16 +58,17 @@ public class Regiment
 
         switch (unit.State) {
             case Unit.UnitState.Advancing:
-                UpdateAdvancing();
+                UpdateAdvancing(battle);
                 break;
             case Unit.UnitState.Fighting:
                 UpdateFighting();
                 break;
         }
     }
-    void UpdateAdvancing()
+    void UpdateAdvancing(Battle battle)
     {
-        //TODO
+        unit.groundTaken += battle.battleInterval * speed;
+        unit.UpdatePosition(startX, advanceDirection);
     }
     void UpdateFighting()
     {
