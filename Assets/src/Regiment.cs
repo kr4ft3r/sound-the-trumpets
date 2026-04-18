@@ -58,6 +58,10 @@ public class Regiment
     {
         return unit.State == Unit.UnitState.Fighting;
     }
+    public bool TrumpetReady()
+    {
+        return trumpet.State == Trumpet.TrumpetState.Ready;
+    }
     public float GetGroundTaken()
     {
         return unit.groundTaken;

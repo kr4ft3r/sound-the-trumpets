@@ -10,13 +10,13 @@ public class Faction
     public FactionSide Side;
     public Regiment[] Regiments;
     public bool IsHumanPlayer = false;
-    public float TimeSinceDecision = 0;
+    public float TimeUntilComputerDecision = 0;
     public Faction(int id, FactionSide side)
     {
         ID = id;
         this.Side = side;
 
-        /*if (id == 0) */IsHumanPlayer = true; // TODO don't force here
+        if (id == 0) IsHumanPlayer = true; // TODO don't force here
 
         InitRegiments();
     }
@@ -27,9 +27,24 @@ public class Faction
             var reg = new Regiment(i + 1, FixedValues.GetFactionColor(ID), Side == FactionSide.Left ? 1f : -1f);
             Regiments[i] = reg;
         }
+        TimeUntilComputerDecision = Random.Range(1f, 10f);
     }
     public void UpdateBattleState()
     {
 
+    }
+
+    public List<(Regiment,bool)> GetPossibleTrumpetSignals()
+    {
+        var possible = new List<(Regiment,bool)>();
+        foreach(var reg in Regiments)
+        {
+            if (reg.TrumpetReady())
+            {
+                possible.Add((reg,false));
+            }
+        }
+
+        return possible;
     }
 }

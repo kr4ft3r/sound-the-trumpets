@@ -187,13 +187,19 @@ public class Battle : MonoBehaviour
 
     void HandleComputerPlayerInput(Faction faction)
     {
-        faction.TimeSinceDecision += Time.deltaTime;
-        if (faction.TimeSinceDecision < 2 || Random.Range(0f, 1.0f) < 0.9f) 
+        faction.TimeUntilComputerDecision -= Time.deltaTime;
+        if (faction.TimeUntilComputerDecision > 0.00f) 
         {
             return;
         }
 
-        faction.TimeSinceDecision = 0;
+        faction.TimeUntilComputerDecision = Random.Range(0.5f, 8.0f);
+
+        var signals = faction.GetPossibleTrumpetSignals();
+        if (signals.Count == 0) return;
+        
+        var rnd = signals[Random.Range(0, signals.Count)]; //(max exclusive)
+        SignalSent?.Invoke(rnd.Item1, faction, rnd.Item2);
     }
 
     public bool UnitsAreWithinEngagementDistance(Regiment leftReg, Regiment rightReg) {
