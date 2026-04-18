@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,9 @@ public class Regiment
 
     public List<IRegimentUpgrade> Upgrades = new List<IRegimentUpgrade>();
 
-    public int BonusTrumpetCooldown;
+    public int BonusTrumpetCooldown = 0;
+    public int BonusTrumpetDelay = 0;
+    public bool HasCannon = false;
 
     public Regiment(int order, Color color, float advanceDirection)
     {
@@ -163,7 +166,14 @@ public class Regiment
 
         if (isSpecial)
         {
-            Debug.LogWarning("Artillery not implemented");
+            if (!HasCannon)
+            {
+                Debug.LogWarning("No cannon availabe for " + GetName());
+
+                return;
+            }
+            Debug.Log("Bam!");
+
             return;
         }
 

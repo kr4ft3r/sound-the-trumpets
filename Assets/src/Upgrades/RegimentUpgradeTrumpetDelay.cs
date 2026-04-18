@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RegimentUpgradeTrumpetCooldown : IRegimentUpgrade
+public class RegimentUpgradeTrumpetDelay : IRegimentUpgrade
 {
     int level = 0;
     public void Apply(Regiment reg)
     {
         level++;
-        reg.BonusTrumpetCooldown = 10 * StackLevel();
+        reg.BonusTrumpetDelay = 10 * StackLevel();
     }
 
     public string GetDescription(bool future)
@@ -16,17 +16,17 @@ public class RegimentUpgradeTrumpetCooldown : IRegimentUpgrade
         var lvl = StackLevel();
         if (future) lvl = StackLevel() + 1;
 
-        return "Reduce trumpet cooldown by "+(10 * lvl)+"%";
+        return "Reduce signal delay by " + (10 * lvl) + "%";
     }
 
     public string GetId()
     {
-        return "trumpet_cooldown";
+        return "trumpet_delay";
     }
 
     public string GetName()
     {
-        return "Trumpeteer's Lungs";
+        return "Quick Ears";
     }
 
     public bool IsStackable()

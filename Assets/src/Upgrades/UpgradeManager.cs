@@ -36,7 +36,9 @@ public class UpgradeManager
     public static List<IRegimentUpgrade> GetRegimentUpgradeTypes()
     {
         return new List<IRegimentUpgrade> {
-            new RegimentUpgradeTrumpetCooldown()
+            new RegimentUpgradeTrumpetCooldown(),
+            new RegimentUpgradeTrumpetDelay(),
+            new RegimentUpgradeCannon(),
         };
     }
 }
