@@ -12,10 +12,12 @@ public class Battle : MonoBehaviour
     public Faction RedFaction;
 
     GameObject unitPrefab;
+    GameObject trumpetPrefab;
 
     private void Awake()
     {
         unitPrefab = Resources.Load<GameObject>("Prefabs/Unit");
+        trumpetPrefab = Resources.Load<GameObject>("Prefabs/Trumpet");
     }
 
     // Start is called before the first frame update
@@ -73,9 +75,13 @@ public class Battle : MonoBehaviour
             spr.color = reg.Color;
             spr.flipX = faction.Side == Faction.FactionSide.Right;
             unit.transform.position = new Vector2(
-                FixedValues.UnitSlotDistanceFromCenterX * xMod,
+                FixedValues.UnitStartingDistanceFromCenterX * xMod,
                 FixedValues.FirstUnitSlotPositionY + (i * FixedValues.UnitColumnDistance) * downDir
                 );
+
+            GameObject trumpet = GameObject.Instantiate(trumpetPrefab);
+            trumpet.transform.position = new Vector2(FixedValues.UnitSlotDistanceFromCenterX * xMod, unit.transform.position.y - 0.2f);
+            trumpet.transform.Find("sprite").GetComponent<SpriteRenderer>().flipX = faction.Side == Faction.FactionSide.Right;
         }
     }
 }

@@ -17,7 +17,20 @@ public class Unit : MonoBehaviour
         spriteGO = transform.Find("sprite").gameObject;
         sprite = spriteGO.GetComponent<SpriteRenderer>();
         animator = spriteGO.GetComponent<Animator>();
-        animator.speed = 0.1f;
+        animator.speed = FixedValues.AnimationSpeedHolding;
+    }
+
+    public void Advance()
+    {
+        animator.speed = FixedValues.AnimationSpeedMoving;
+    }
+    public void Hold()
+    {
+        animator.speed = FixedValues.AnimationSpeedHolding;
+    }
+    public void Fight()
+    {
+        animator.speed = FixedValues.AnimationSpeedFighting;
     }
 
     // Update is called once per frame
