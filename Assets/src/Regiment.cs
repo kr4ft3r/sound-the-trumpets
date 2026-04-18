@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Regiment
@@ -17,7 +18,7 @@ public class Regiment
 
     public List<IRegimentUpgrade> Upgrades = new List<IRegimentUpgrade>();
 
-    public float BonusTrumpetCooldown;
+    public int BonusTrumpetCooldown;
 
     public Regiment(int order, Color color, float advanceDirection)
     {
@@ -79,6 +80,19 @@ public class Regiment
     {
         unit.FightState = Unit.UnitFightState.Retreating;
         unit.FightDifference = diff;
+    }
+    public void AssignRandomUpgrade()
+    {
+        var pool = UpgradeManager.GetPossibleUpgradesForRegiment(this);
+        if (pool.Count == 0)
+        {
+            Debug.Log("Random upgrade: No upgrades possible for " + GetName());
+
+            return;
+        }
+        Upgrades.Add(pool[Random.Range(0, pool.Count)]);
+        Upgrades.Last().Apply(this);
+        Debug.Log("Added upgrade " + Upgrades.Last().GetName()+" to " + GetName());
     }
 
     public void UpdateBattleState(Battle battle)
@@ -165,6 +179,6 @@ public class Regiment
                 break;
         }
         unit.NextStateTimer = FixedValues.BaseTrumpetDelay;
-        trumpet.Blow(FixedValues.BaseTrumpetCooldown);//TODO better
+        trumpet.Blow(FixedValues.BaseTrumpetCooldown - (FixedValues.BaseTrumpetCooldown * (BonusTrumpetCooldown * 0.01f)));//TODO better
     }
 }

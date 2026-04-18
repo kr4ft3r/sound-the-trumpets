@@ -26,7 +26,10 @@ public class Faction
         for (int i = 0; i < FixedValues.RegimentsPerFaction; i++) { 
             var reg = new Regiment(i + 1, FixedValues.GetFactionColor(ID), Side == FactionSide.Left ? 1f : -1f);
             Regiments[i] = reg;
+            //TODO remove test
+            if (i==3) reg.AssignRandomUpgrade();
         }
+
         TimeUntilComputerDecision = Random.Range(1f, 10f);
     }
     public void UpdateBattleState()
