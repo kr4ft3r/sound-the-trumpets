@@ -11,7 +11,7 @@ public class RegimentUpgradeCannon : IRegimentUpgrade
 
     public string GetDescription(bool future)
     {
-        return "Hold L or R (depending on faction) Shift while pressing regiment's number to fire the cannon. Only possible before engagement and does most damage against standing units."
+        return "Hold L or R (depending on faction) Shift while pressing regiment's number to fire the cannon. Only possible before engagement and does most damage against standing units.";
     }
 
     public string GetId()
@@ -21,7 +21,7 @@ public class RegimentUpgradeCannon : IRegimentUpgrade
 
     public string GetName()
     {
-        return "Artillery Detachment"
+        return "Artillery Detachment";
     }
 
     public bool IsStackable()

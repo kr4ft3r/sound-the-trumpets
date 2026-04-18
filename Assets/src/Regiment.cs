@@ -93,7 +93,7 @@ public class Regiment
 
             return;
         }
-        Upgrades.Add(pool[Random.Range(0, pool.Count)]);
+        Upgrades.Add(pool[UnityEngine.Random.Range(0, pool.Count)]);
         Upgrades.Last().Apply(this);
         Debug.Log("Added upgrade " + Upgrades.Last().GetName()+" to " + GetName());
     }
@@ -188,7 +188,7 @@ public class Regiment
                 unit.NextState = Unit.UnitState.Holding;
                 break;
         }
-        unit.NextStateTimer = FixedValues.BaseTrumpetDelay;
-        trumpet.Blow(FixedValues.BaseTrumpetCooldown - (FixedValues.BaseTrumpetCooldown * (BonusTrumpetCooldown * 0.01f)));//TODO better
+        unit.NextStateTimer = FixedValues.BaseTrumpetDelay - (FixedValues.BaseTrumpetDelay * (BonusTrumpetDelay * 0.01f));
+        trumpet.Blow(FixedValues.BaseTrumpetCooldown - (FixedValues.BaseTrumpetCooldown * (BonusTrumpetCooldown * 0.01f)));
     }
 }

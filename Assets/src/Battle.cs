@@ -150,38 +150,38 @@ public class Battle : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            SignalSent?.Invoke(BlueFaction.Regiments[0], BlueFaction, Input.GetKeyUp(KeyCode.LeftShift));
+            SignalSent?.Invoke(BlueFaction.Regiments[0], BlueFaction, Input.GetKey(KeyCode.LeftShift));
         }
         else if (Input.GetKeyUp(KeyCode.Alpha2))
         {
-            SignalSent?.Invoke(BlueFaction.Regiments[1], BlueFaction, Input.GetKeyUp(KeyCode.LeftShift));
+            SignalSent?.Invoke(BlueFaction.Regiments[1], BlueFaction, Input.GetKey(KeyCode.LeftShift));
         }
         else if (Input.GetKeyUp(KeyCode.Alpha3))
         {
-            SignalSent?.Invoke(BlueFaction.Regiments[2], BlueFaction, Input.GetKeyUp(KeyCode.LeftShift));
+            SignalSent?.Invoke(BlueFaction.Regiments[2], BlueFaction, Input.GetKey(KeyCode.LeftShift));
         }
         else if (Input.GetKeyUp(KeyCode.Alpha4))
         {
-            SignalSent?.Invoke(BlueFaction.Regiments[3], BlueFaction, Input.GetKeyUp(KeyCode.LeftShift));
+            SignalSent?.Invoke(BlueFaction.Regiments[3], BlueFaction, Input.GetKey(KeyCode.LeftShift));
         }
     }
     void HandleRedPlayerHumanInput()
     {
         if (Input.GetKeyUp(KeyCode.Alpha7))
         {
-            SignalSent?.Invoke(RedFaction.Regiments[0], RedFaction, Input.GetKeyUp(KeyCode.RightShift));
+            SignalSent?.Invoke(RedFaction.Regiments[0], RedFaction, Input.GetKey(KeyCode.RightShift));
         }
         else if (Input.GetKeyUp(KeyCode.Alpha8))
         {
-            SignalSent?.Invoke(RedFaction.Regiments[1], RedFaction, Input.GetKeyUp(KeyCode.RightShift));
+            SignalSent?.Invoke(RedFaction.Regiments[1], RedFaction, Input.GetKey(KeyCode.RightShift));
         }
         else if (Input.GetKeyUp(KeyCode.Alpha9))
         {
-            SignalSent?.Invoke(RedFaction.Regiments[2], RedFaction, Input.GetKeyUp(KeyCode.RightShift));
+            SignalSent?.Invoke(RedFaction.Regiments[2], RedFaction, Input.GetKey(KeyCode.RightShift));
         }
         else if (Input.GetKeyUp(KeyCode.Alpha0))
         {
-            SignalSent?.Invoke(RedFaction.Regiments[3], RedFaction, Input.GetKeyUp(KeyCode.RightShift));
+            SignalSent?.Invoke(RedFaction.Regiments[3], RedFaction, Input.GetKey(KeyCode.RightShift));
         }
     }
 

@@ -72,12 +72,12 @@ public class Unit : MonoBehaviour
     {
         if (Strength < strength)
         {
-            Debug.Log("^ " + Strength);
+            //Debug.Log("^ " + Strength);
             Strength += FixedValues.HoldingStrengthChangeRate;
         }
         else if (Strength > strength)
         {
-            Debug.Log("V " + Strength);
+            //Debug.Log("V " + Strength);
             Strength -= FixedValues.HoldingStrengthChangeRate;
         }
         if (Strength > strength) Strength = (int)strength;
@@ -86,7 +86,7 @@ public class Unit : MonoBehaviour
     public void UpdateStrengthAdvancing(AnimationCurve curve, float strength, float traversed)
     {
         var traversedNormal = (traversed / FixedValues.GetFieldSize());
-        Debug.Log("!!!! " + traversedNormal);
+        //Debug.Log("!!!! " + traversedNormal);
         Strength = (int) Mathf.Round(strength * curve.Evaluate(traversedNormal));
         UpdateStrengthBar();
     }
