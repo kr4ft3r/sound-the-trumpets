@@ -12,6 +12,11 @@ public class Regiment
     Trumpet trumpet;
     float startX;
     float speed = FixedValues.BaseUnitSpeed;
+    public List<IRegimentUpgrade> Upgrades = new List<IRegimentUpgrade>();
+
+    public float BonusTrumpetCooldown = 0;
+    public float BonusTrumpetHeard = 0;
+
     public Regiment(int order, Color color, float advanceDirection)
     {
         Order = order;
