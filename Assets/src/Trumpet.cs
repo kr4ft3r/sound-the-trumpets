@@ -26,26 +26,26 @@ public class Trumpet : MonoBehaviour
 
     public void Blow(float enableTime)
     {
-        Debug.Log("Blow");
+        //Debug.Log("Blow");
         State = TrumpetState.NotReady;
         animator.SetTrigger("TrumpetBlowing");
         EnableTimer = enableTime;
     }
     public void Heard()
     {
-        Debug.Log("Heard");
+        //Debug.Log("Heard");
         animator.SetTrigger("TrumpetNotAvailable");
     }
     public void Ready()
     {
-        Debug.Log("Ready");
+        //Debug.Log("Ready");
         State = TrumpetState.Ready;
         animator.SetTrigger("TrumpetAvailable");
         EnableTimer = 0.00f;
     }
     public void Deactivate()
     {
-        Debug.Log("Deactivate");
+        //Debug.Log("Deactivate");
         State = TrumpetState.NotReady;
         animator.SetTrigger("TrumpetNotAvailable");
     }

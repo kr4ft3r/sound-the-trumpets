@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour
     public UnitFightState FightState = Unit.UnitFightState.None;
     public int FightDifference = 0;
     public float LastHealTime = 0;
+    public float Damage = 0;
 
     GameObject spriteGO;
     SpriteRenderer sprite;
@@ -70,17 +71,25 @@ public class Unit : MonoBehaviour
     }
     public void UpdateStrengthHolding(float strength)
     {
-        if (Strength < strength)
+        if (Damage > 0.00f)
         {
-            //Debug.Log("^ " + Strength);
-            Strength += FixedValues.HoldingStrengthChangeRate;
-        }
-        else if (Strength > strength)
+            Damage -= FixedValues.HoldingStrengthChangeRate;
+            if (Damage < 0.00f) Damage = 0;
+        } else
         {
-            //Debug.Log("V " + Strength);
-            Strength -= FixedValues.HoldingStrengthChangeRate;
+            if (Strength < strength)
+            {
+                //Debug.Log("^ " + Strength);
+                Strength += FixedValues.HoldingStrengthChangeRate;
+            }
+            else if (Strength > strength)
+            {
+                //Debug.Log("V " + Strength);
+                Strength -= FixedValues.HoldingStrengthChangeRate;
+            }
+            if (Strength > strength) Strength = (int)strength;
         }
-        if (Strength > strength) Strength = (int)strength;
+        
         UpdateStrengthBar();
     }
     public void UpdateStrengthAdvancing(AnimationCurve curve, float strength, float traversed)
@@ -90,9 +99,14 @@ public class Unit : MonoBehaviour
         Strength = (int) Mathf.Round(strength * curve.Evaluate(traversedNormal));
         UpdateStrengthBar();
     }
+    public void TakeDamage(float amount)
+    {
+        Damage += Mathf.Floor(amount);
+        UpdateStrengthBar();
+    }
     void UpdateStrengthBar()
     {
-        strengthBar.localScale = new Vector3(Strength * .01f, 1, 1);
+        strengthBar.localScale = new Vector3(GetMorale() * .01f, 1, 1);
         if (strengthBar.localScale.x <= 1.0f)
         {
             strengthRenderer.color = Color.red;
@@ -111,5 +125,10 @@ public class Unit : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public int GetMorale()
+    {
+        return Strength - (int) Mathf.Floor(Damage);
     }
 }

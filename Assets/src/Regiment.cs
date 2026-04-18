@@ -14,8 +14,10 @@ public class Regiment
     Trumpet trumpet;
     float startX;
     float speed = FixedValues.BaseUnitSpeed;
-    float advancedFromX; // Last position when advance order was given, in ground taken, for determining traversed
     float unitStrength = FixedValues.BaseUnitStrength;
+
+    float advancedFromX; // Last position when advance order was given, in ground taken, for determining traversed
+    float cannonFuseTimer = 0;
 
     public List<IRegimentUpgrade> Upgrades = new List<IRegimentUpgrade>();
 
@@ -44,6 +46,8 @@ public class Regiment
         this.trumpet = trumpet;
         Battle.SignalSent += OnSignalSent;
         startX = unit.transform.position.x;
+        advancedFromX = unit.groundTaken;
+        cannonFuseTimer = 0;
         Debug.LogWarning("Remember to implement Undeploy");
     }
     public void Undeploy()
@@ -70,9 +74,9 @@ public class Regiment
     {
         return unit.groundTaken;
     }
-    public int GetCurrentStrength()
+    public int GetCurrentMorale()
     {
-        return unit.Strength;
+        return unit.GetMorale();
     }
     public void Pursue(int diff)
     {
@@ -133,7 +137,7 @@ public class Regiment
         }
     }
     void UpdateHolding(Battle battle) {
-        if (unit.Strength != unitStrength && battle.timeElapsed > unit.LastHealTime+1f)//update per second
+        if (unit.GetMorale() != unitStrength && battle.timeElapsed > unit.LastHealTime+1f)//update per second
         {
             unit.UpdateStrengthHolding(unitStrength);
             unit.LastHealTime = battle.timeElapsed;
@@ -156,6 +160,28 @@ public class Regiment
         }
         unit.UpdatePosition(startX, advanceDirection);
     }
+    public void UpdateCannon(Battle battle, Regiment targetReg)
+    {
+        if (cannonFuseTimer <= 0.00f) return;
+        cannonFuseTimer -= battle.battleInterval;
+        if (cannonFuseTimer > 0.00f) return;
+
+        cannonFuseTimer = 0;
+        Debug.Log("Firing cannon!");
+        var moraleDamage = UnityEngine.Random.Range(5f, 10f);
+        targetReg.TakeArtilleryDamage(moraleDamage);
+    }
+    public void TakeArtilleryDamage(float damage)
+    {
+        if (unit.State == Unit.UnitState.Fighting) return;
+        if (unit.State == Unit.UnitState.Holding)
+        {
+            damage *= 3;
+        }
+        Debug.Log(GetName() + " aimed by cannon, morale was " + unit.GetMorale());
+        unit.TakeDamage(damage);
+        Debug.Log(GetName() + " taken " + damage + " from cannon, morale is now " + unit.GetMorale());
+    }
 
     void OnSignalSent(Regiment regiment, Faction faction, bool isSpecial)
     {
@@ -172,7 +198,8 @@ public class Regiment
 
                 return;
             }
-            Debug.Log("Bam!");
+            Debug.Log("Lighting fuse!");
+            cannonFuseTimer = UnityEngine.Random.Range(1.0f, 4.0f);
 
             return;
         }

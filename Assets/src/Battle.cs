@@ -114,6 +114,13 @@ public class Battle : MonoBehaviour
         {
             var leftReg = BlueFaction.Regiments[i];
             var rightReg = RedFaction.Regiments[i];
+
+            // Artillery
+            if (leftReg.HasCannon) leftReg.UpdateCannon(this, rightReg);
+            if (rightReg.HasCannon) rightReg.UpdateCannon(this, leftReg);
+
+            // Melee engagement
+
             bool engagementActive = false;
             if (!leftReg.IsEngaged() || !rightReg.IsEngaged()) // whatever
             {
@@ -125,7 +132,7 @@ public class Battle : MonoBehaviour
                     rightReg.Engage();
 
                     // And now, the actual combat, strength resolved in advance
-                    int leftRelativeDiff = (int)(leftReg.GetCurrentStrength() - rightReg.GetCurrentStrength());
+                    int leftRelativeDiff = (int)(leftReg.GetCurrentMorale() - rightReg.GetCurrentMorale());
                     if (leftRelativeDiff > 0)
                     {
                         leftReg.Pursue(Mathf.Abs(leftRelativeDiff));
