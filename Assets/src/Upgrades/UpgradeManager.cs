@@ -9,15 +9,20 @@ public class UpgradeManager
         var possibleUpgrades = new List<IRegimentUpgrade>();
         var upgradeTypes = GetRegimentUpgradeTypes();
         for (int i = upgradeTypes.Count - 1; i >= 0; i--) {
+            
             var upgradeType = upgradeTypes[i];
+            Debug.Log("Cheaking " + upgradeType.GetName());
             bool foundActive = false;
             foreach(var activeUpgrade in reg.Upgrades)
             {
+                Debug.Log("Checking " + activeUpgrade.GetId() + ":" +upgradeType.GetId());
                 if (activeUpgrade.GetId() == upgradeType.GetId())
                 {
+                    Debug.Log("Found active");
                     foundActive = true;
                     if (!activeUpgrade.IsStackable() || (activeUpgrade.IsStackable() && activeUpgrade.StackLevel() == activeUpgrade.MaxStackLevel()))
                     {
+                        Debug.Log("Skipping " + activeUpgrade.GetName());
                         continue;
                     }
                     Debug.Log("Addin another "+activeUpgrade.GetName());
@@ -27,6 +32,7 @@ public class UpgradeManager
             }
             if (!foundActive)
             {
+                Debug.Log("Did not found active "+upgradeType.GetName());
                 possibleUpgrades.Add(upgradeType);
                 continue;
             }

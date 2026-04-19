@@ -97,12 +97,12 @@ public class UpgradeScreen : MonoBehaviour
         {
             if (player1Selected) return;
             player1Selected = true;
-            upgrade.Apply(blueTeamRegiment);
+            blueTeamRegiment.AssignUpgrade(upgrade);
         } else
         {
             if (player2Selected) return;
             player2Selected = true;
-            upgrade.Apply(redTeamRegiment);
+            redTeamRegiment.AssignUpgrade(upgrade);
         }
         foreach (var opt in allUpgradeOptions)
         {
