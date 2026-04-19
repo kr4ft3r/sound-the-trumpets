@@ -53,4 +53,20 @@ public class Faction
 
         return possible;
     }
+    public List<(Regiment,bool)> GetPossibleCannonSignals()
+    {
+        var possible = new List<(Regiment, bool)>();
+        foreach (var reg in Regiments)
+        {
+            if (reg.HasCannon)
+            {
+                if (reg.CannonReady())
+                {
+                    possible.Add((reg, true));
+                }
+            }
+        }
+
+        return possible;
+    }
 }

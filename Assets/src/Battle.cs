@@ -276,10 +276,19 @@ public class Battle : MonoBehaviour
         faction.TimeUntilComputerDecision = Random.Range(0.5f, 8.0f);
 
         var signals = faction.GetPossibleTrumpetSignals();
-        if (signals.Count == 0) return;
-        
-        var rnd = signals[Random.Range(0, signals.Count)]; //(max exclusive)
-        SignalSent?.Invoke(rnd.Item1, faction, rnd.Item2);
+        if (signals.Count > 0)
+        {
+
+            var rnd = signals[Random.Range(0, signals.Count)]; //(max exclusive)
+            SignalSent?.Invoke(rnd.Item1, faction, rnd.Item2);
+        }
+
+        var cannonSignals = faction.GetPossibleCannonSignals();
+        if (cannonSignals.Count > 0)
+        {
+            var rnd = cannonSignals[Random.Range(0, cannonSignals.Count)];
+            SignalSent?.Invoke(rnd.Item1, faction, rnd.Item2);
+        }
     }
 
     public bool UnitsAreWithinEngagementDistance(Regiment leftReg, Regiment rightReg) {

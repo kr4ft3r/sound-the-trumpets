@@ -26,7 +26,7 @@ public class RegimentUpgradeTrumpetDelay : IRegimentUpgrade
 
     public string GetName()
     {
-        return "Quick Ears";
+        return "Attention Training";
     }
 
     public bool IsStackable()

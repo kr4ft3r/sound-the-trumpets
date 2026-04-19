@@ -79,6 +79,10 @@ public class Regiment
     {
         return trumpet.State == Trumpet.TrumpetState.Ready;
     }
+    public bool CannonReady()
+    {
+        return cannon.State == Cannon.CannonState.Ready;
+    }
     public float GetGroundTaken()
     {
         return unit.groundTaken;
@@ -254,7 +258,7 @@ public class Regiment
     public void HandleTrumpetSignal(Regiment regiment, Faction faction)
     {
         if (unit.State == Unit.UnitState.Fighting || unit.State == Unit.UnitState.Pursuing || unit.State == Unit.UnitState.Retreating) return;
-        if (trumpet.State != Trumpet.TrumpetState.Ready) return; // TODO funny sound?
+        if (trumpet.State != Trumpet.TrumpetState.Ready) { trumpet.PlayFail(); return; }
         Debug.Log("Signal for faction " + faction.ID + " regiment order " + regiment.Order);
 
         if (trumpet.Deactivated) return;

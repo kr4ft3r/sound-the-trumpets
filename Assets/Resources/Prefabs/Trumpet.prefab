@@ -329,6 +329,7 @@ MonoBehaviour:
   Deactivated: 0
   HornAdvance: {fileID: 8300000, guid: b9b45b6312ebd3045b4739ed3011e9be, type: 3}
   HornHold: {fileID: 8300000, guid: 24db185941b7a4f478c5b1dab85b1b01, type: 3}
+  HornFail: {fileID: 8300000, guid: 0499d3f53b112ac4f9b6c2ab7d1e657c, type: 3}
 --- !u!82 &973280221628996430
 AudioSource:
   m_ObjectHideFlags: 0

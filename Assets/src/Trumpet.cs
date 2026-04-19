@@ -17,6 +17,7 @@ public class Trumpet : MonoBehaviour
 
     public AudioClip HornAdvance;
     public AudioClip HornHold;
+    public AudioClip HornFail;
     AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
@@ -75,5 +76,9 @@ public class Trumpet : MonoBehaviour
     public void PlayHold()
     {
         audioSource.PlayOneShot(HornHold);
+    }
+    public void PlayFail()
+    {
+        audioSource.PlayOneShot(HornFail);
     }
 }
