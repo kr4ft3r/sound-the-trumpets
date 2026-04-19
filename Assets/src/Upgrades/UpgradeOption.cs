@@ -5,13 +5,14 @@ using TMPro;
 
 public class UpgradeOption : MonoBehaviour
 {
-    public System.Action<UpgradeOption, IRegimentUpgrade> RegimentUpgradeSelected;
+    public static System.Action<Regiment, UpgradeOption, IRegimentUpgrade> RegimentUpgradeSelected;
 
     public int Key;
     public string Name;
     public string Description;
     public IRegimentUpgrade RegimentUpgrade;
     public KeyCode KeyCode;
+    public Regiment Regiment;
     TextMeshPro NameText;
     TextMeshPro DescriptionText;
     TextMeshPro KeyText;
@@ -26,12 +27,14 @@ public class UpgradeOption : MonoBehaviour
     {
         if (Input.GetKeyUp(this.KeyCode))
         {
-
+            RegimentUpgradeSelected?.Invoke(Regiment, this, RegimentUpgrade);
         }
     }
 
-    public void Configure(int key, IRegimentUpgrade upgrade)
+    public void Configure(Regiment regiment, int key, IRegimentUpgrade upgrade)
     {
+        RegimentUpgrade = upgrade;
+        Regiment = regiment;
         NameText = transform.Find("Name").GetComponent<TextMeshPro>();
         DescriptionText = transform.Find("Description").GetComponent<TextMeshPro>();
         KeyText = transform.Find("Key").GetComponent<TextMeshPro>();

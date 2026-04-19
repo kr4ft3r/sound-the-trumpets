@@ -97,9 +97,20 @@ public class Regiment
 
             return;
         }
-        Upgrades.Add(pool[UnityEngine.Random.Range(0, pool.Count)]);
-        Upgrades.Last().Apply(this);
-        Debug.Log("Added upgrade " + Upgrades.Last().GetName()+" to " + GetName());
+        AssignUpgrade(pool[UnityEngine.Random.Range(0, pool.Count)]);
+    }
+    public void AssignUpgrade(IRegimentUpgrade upgrade)
+    {
+        foreach (var ownUpgrade in Upgrades)
+        {
+            if (ownUpgrade == upgrade)
+            {
+                ownUpgrade.Apply(this);
+                return;
+            }
+        }
+        Upgrades.Add(upgrade);
+        upgrade.Apply(this);
     }
 
     public void UpdateBattleState(Battle battle)

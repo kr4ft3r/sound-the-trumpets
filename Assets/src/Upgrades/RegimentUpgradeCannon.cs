@@ -11,7 +11,7 @@ public class RegimentUpgradeCannon : IRegimentUpgrade
 
     public string GetDescription(bool future)
     {
-        return "Hold L or R (depending on faction) Shift while pressing regiment's number to fire the cannon. Only possible before engagement and does most damage against standing units.";
+        return "Hold Shift and press regiment's key to fire. Only before engagement. Most damage against stationary. Random delay.";
     }
 
     public string GetId()

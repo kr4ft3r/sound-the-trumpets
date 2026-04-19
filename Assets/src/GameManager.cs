@@ -42,9 +42,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-
-        // TODO remove test calls
-        StartBattle();
     }
 
     // Update is called once per frame

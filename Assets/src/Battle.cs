@@ -168,7 +168,7 @@ public class Battle : MonoBehaviour
                         // Stalemate
                         stalemates++;
                     }
-                    Debug.Log(leftRelativeDiff);
+                    //Debug.Log(leftRelativeDiff);
                 }
             }
         }
@@ -191,7 +191,7 @@ public class Battle : MonoBehaviour
             }
         } else if (!Resolved)
         {
-            Debug.Log(winningBlue + "+" + winningRed + "+" + stalemates);
+            //Debug.Log(winningBlue + "+" + winningRed + "+" + stalemates);
         }
     }
 

@@ -29,7 +29,7 @@ public class Faction
             var reg = new Regiment(i + 1, FixedValues.GetFactionColor(ID), Side == FactionSide.Left ? 1f : -1f);
             Regiments[i] = reg;
             //TODO remove test
-            if (i==3) reg.AssignRandomUpgrade();
+            //if (i==3) reg.AssignRandomUpgrade();
         }
 
         TimeUntilComputerDecision = Random.Range(1f, 10f);
