@@ -232,9 +232,6 @@ public class Regiment
     void OnSignalSent(Regiment regiment, Faction faction, bool isSpecial)
     {
         if (regiment != this) return;
-        if (unit.State == Unit.UnitState.Fighting || unit.State == Unit.UnitState.Pursuing || unit.State == Unit.UnitState.Retreating) return;
-        if (trumpet.State != Trumpet.TrumpetState.Ready) return; // TODO funny sound?
-        Debug.Log("Signal for faction " + faction.ID + " regiment order " + regiment.Order);
 
         if (isSpecial)
         {
@@ -250,7 +247,16 @@ public class Regiment
             cannon.Fuse(UnityEngine.Random.Range(1.0f, 4.0f));
 
             return;
+        } else
+        {
+            HandleTrumpetSignal(regiment, faction);
         }
+    }
+    public void HandleTrumpetSignal(Regiment regiment, Faction faction)
+    {
+        if (unit.State == Unit.UnitState.Fighting || unit.State == Unit.UnitState.Pursuing || unit.State == Unit.UnitState.Retreating) return;
+        if (trumpet.State != Trumpet.TrumpetState.Ready) return; // TODO funny sound?
+        Debug.Log("Signal for faction " + faction.ID + " regiment order " + regiment.Order);
 
         if (trumpet.Deactivated) return;
 
