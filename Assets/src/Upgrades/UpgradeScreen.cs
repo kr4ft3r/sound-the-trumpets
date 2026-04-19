@@ -54,8 +54,8 @@ public class UpgradeScreen : MonoBehaviour
         var possible = UpgradeManager.GetPossibleUpgradesForRegiment(reg);
         int maxOptions = (possible.Count < 3 ? possible.Count : 3);
         var options = new List<IRegimentUpgrade>();
-        Debug.Log("Upgrade options max:"+maxOptions);
-        Debug.Log(possible);
+        //Debug.Log("Upgrade options max:"+maxOptions);
+        //Debug.Log(possible);
         while (options.Count < maxOptions)
         {
             var rndIndex = Random.Range(0, possible.Count);

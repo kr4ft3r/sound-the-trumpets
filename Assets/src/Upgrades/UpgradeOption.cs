@@ -44,7 +44,7 @@ public class UpgradeOption : MonoBehaviour
         Description = upgrade.GetDescription(true);
         this.KeyCode = KeyCode.Alpha0 + Key;
 
-        NameText.text = upgrade.GetName();
+        NameText.text = upgrade.GetName() + (upgrade.IsStackable() ? (" " + (upgrade.StackLevel()+1).ToString()) : "");
         DescriptionText.text = upgrade.GetDescription(true);
         KeyText.text = Key.ToString();
     }
