@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -42,6 +43,9 @@ public class Battle : MonoBehaviour
         SpawnFaction(RedFaction);
 
         mainCoroutine = StartCoroutine(MainUpdate());
+
+        GameObject.Find("BlueGeneral").transform.Find("Score").GetComponent<TextMeshPro>().text = GameManager.instance.WinsBlueFaction.ToString();
+        GameObject.Find("RedGeneral").transform.Find("Score").GetComponent<TextMeshPro>().text = GameManager.instance.WinsRedFaction.ToString();
     }
 
     // Update is called once per frame

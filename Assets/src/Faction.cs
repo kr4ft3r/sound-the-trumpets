@@ -17,7 +17,8 @@ public class Faction
         ID = id;
         this.Side = side;
 
-        if (id == 0) IsHumanPlayer = true; // TODO don't force here
+        IsHumanPlayer = false;
+        //if (id == 0) IsHumanPlayer = true; // TODO don't force here
         LeaderName = leaderName;
 
         InitRegiments();

@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     Faction redFaction;
     public Faction RedFaction { get { return redFaction; } }
 
+    public int WinsBlueFaction = 0;
+    public int WinsRedFaction = 0;
+
     Battle battle;
 
     public static GameManager instance;
@@ -39,6 +42,8 @@ public class GameManager : MonoBehaviour
     {
         blueFaction = new Faction(0, Faction.FactionSide.Left, "Prince Blue");
         redFaction = new Faction(1, Faction.FactionSide.Right, "Prince Red");
+        WinsBlueFaction = 0;
+        WinsRedFaction = 0;
     }
 
     public void StartBattle()
@@ -73,9 +78,13 @@ public class GameManager : MonoBehaviour
             if (winningFaction.ID == 0)
             {
                 ColorUtility.TryParseHtmlString("#2B75C3", out textColor);
+                WinsBlueFaction++;
+                GameObject.Find("BlueGeneral").transform.Find("Score").GetComponent<TextMeshPro>().text = WinsBlueFaction.ToString();
             } else
             {
                 ColorUtility.TryParseHtmlString("#8A1D00", out textColor);
+                WinsRedFaction++;
+                GameObject.Find("RedGeneral").transform.Find("Score").GetComponent<TextMeshPro>().text = WinsRedFaction.ToString();
             }
             roundEndText.color = textColor;
         } else
