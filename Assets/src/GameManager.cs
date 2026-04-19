@@ -86,12 +86,13 @@ public class GameManager : MonoBehaviour
             {
                 if (!redFaction.IsHumanPlayer) startNewGame = true;
                 blueFaction.IsHumanPlayer = true;
-                
+                battle.UpdateJoinTexts();
             }
             if (!redFaction.IsHumanPlayer && Input.GetKeyUp(KeyCode.Alpha0))
             {
                 if (!blueFaction.IsHumanPlayer) startNewGame = true;
                 redFaction.IsHumanPlayer = true;
+                battle.UpdateJoinTexts();
             }
 
             if (startNewGame) StartNewGame();

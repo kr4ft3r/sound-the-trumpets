@@ -41,10 +41,24 @@ public class Battle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateJoinTexts();
+
+        SpawnFaction(BlueFaction);
+        SpawnFaction(RedFaction);
+
+        mainCoroutine = StartCoroutine(MainUpdate());
+
+        GameObject.Find("BlueGeneral").transform.Find("Score").GetComponent<TextMeshPro>().text = GameManager.instance.WinsBlueFaction.ToString();
+        GameObject.Find("RedGeneral").transform.Find("Score").GetComponent<TextMeshPro>().text = GameManager.instance.WinsRedFaction.ToString();
+    }
+
+    public void UpdateJoinTexts()
+    {
         if (BlueFaction.IsHumanPlayer)
         {
             GameObject.Find("BlueGeneral").transform.Find("Join").GetComponent<TextMeshPro>().alpha = 0;
-        } else
+        }
+        else
         {
             GameObject.Find("BlueGeneral").transform.Find("Join").GetComponent<TextMeshPro>().alpha = 1;
         }
@@ -56,14 +70,6 @@ public class Battle : MonoBehaviour
         {
             GameObject.Find("RedGeneral").transform.Find("Join").GetComponent<TextMeshPro>().alpha = 1;
         }
-
-        SpawnFaction(BlueFaction);
-        SpawnFaction(RedFaction);
-
-        mainCoroutine = StartCoroutine(MainUpdate());
-
-        GameObject.Find("BlueGeneral").transform.Find("Score").GetComponent<TextMeshPro>().text = GameManager.instance.WinsBlueFaction.ToString();
-        GameObject.Find("RedGeneral").transform.Find("Score").GetComponent<TextMeshPro>().text = GameManager.instance.WinsRedFaction.ToString();
     }
 
     // Update is called once per frame
