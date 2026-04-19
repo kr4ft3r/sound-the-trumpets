@@ -216,7 +216,7 @@ public class Regiment
             return;
         }
         Debug.Log("Firing cannon!");
-        var moraleDamage = UnityEngine.Random.Range(5f, 10f);
+        var moraleDamage = UnityEngine.Random.Range(10f, 30f);
         targetReg.TakeArtilleryDamage(moraleDamage);
         GameManager.instance.CannonFired(targetReg.unit.transform.position);
     }

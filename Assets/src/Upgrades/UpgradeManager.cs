@@ -46,6 +46,7 @@ public class UpgradeManager
             new RegimentUpgradeTrumpetCooldown(),
             new RegimentUpgradeTrumpetDelay(),
             new RegimentUpgradeCannon(),
+            new RegimentUpgradeDummy(),
         };
     }
 }
