@@ -23,6 +23,8 @@ public class Unit : MonoBehaviour
     Animator animator;
     Transform strengthBar;
     SpriteRenderer strengthRenderer;
+    public AudioClip CombatClip;
+    AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,8 @@ public class Unit : MonoBehaviour
         animator.speed = FixedValues.AnimationSpeedHolding;
         strengthBar = spriteGO.transform.Find("strengthBar");
         strengthRenderer = strengthBar.Find("Square").GetComponent<SpriteRenderer>();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void ToNextState()
@@ -62,6 +66,9 @@ public class Unit : MonoBehaviour
     void StartFight()
     {
         animator.speed = FixedValues.AnimationSpeedFighting;
+        audioSource.clip = CombatClip;
+        audioSource.loop = true;
+        audioSource.Play();
     }
 
     public void UpdatePosition(float originalX, float advanceDirection)

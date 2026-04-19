@@ -49,8 +49,6 @@ public class Regiment
         Battle.SignalSent += OnSignalSent;
         startX = unit.transform.position.x;
         advancedFromX = unit.groundTaken;
-
-        Debug.LogWarning("Remember to implement Undeploy");
     }
     public void Undeploy()
     {
@@ -216,6 +214,7 @@ public class Regiment
         Debug.Log("Firing cannon!");
         var moraleDamage = UnityEngine.Random.Range(5f, 10f);
         targetReg.TakeArtilleryDamage(moraleDamage);
+        GameManager.instance.CannonFired(targetReg.unit.transform.position);
     }
     public void TakeArtilleryDamage(float damage)
     {

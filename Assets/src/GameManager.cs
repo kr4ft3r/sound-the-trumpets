@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     Battle battle;
 
+    GameObject explosionPrefab;
+
     public static GameManager instance;
     private void Awake()
     {
@@ -63,9 +65,15 @@ public class GameManager : MonoBehaviour
         battle.InfantryStrengthCurve = InfantryStrengthCurve;
     }
 
+    public void CannonFired(Vector3 position)
+    {
+        GameObject.Instantiate(explosionPrefab, position, Quaternion.identity);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        explosionPrefab = Resources.Load<GameObject>("Prefabs/Explosion");
     }
 
     // Update is called once per frame
