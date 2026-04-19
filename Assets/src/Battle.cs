@@ -23,6 +23,12 @@ public class Battle : MonoBehaviour
     public float battleInterval { get; protected set; } = 0.05f;
     public float timeElapsed { get; protected set; } = 0;
     Coroutine mainCoroutine;
+
+    public void StopUpdates()
+    {
+        StopCoroutine(mainCoroutine);
+    }
+
     private void Awake()
     {
         unitPrefab = Resources.Load<GameObject>("Prefabs/Unit");

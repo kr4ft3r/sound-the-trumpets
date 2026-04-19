@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -81,7 +82,9 @@ public class GameManager : MonoBehaviour
     IEnumerator BattleEndCoroutine()
     {
         yield return new WaitForSeconds(3.0f);
-
+        battle.StopUpdates();
+        battle = null;
         // Upgrades scene
+        SceneManager.LoadScene("UpgradesScene");
     }
 }

@@ -36,6 +36,8 @@ public class UpgradeScreen : MonoBehaviour
         var possible = UpgradeManager.GetPossibleUpgradesForRegiment(reg);
         int maxOptions = (possible.Count < 3 ? possible.Count : 3);
         var options = new List<IRegimentUpgrade>();
+        Debug.Log("Upgrade options max:"+maxOptions);
+        Debug.Log(options);
         while (options.Count < maxOptions)
         {
             var rndIndex = Random.Range(0, possible.Count);
@@ -43,8 +45,12 @@ public class UpgradeScreen : MonoBehaviour
             possible.RemoveAt(rndIndex);
         }
 
-        for (int i = 0; i < possible.Count; i++) {
-            //GameObject.Instantiate
+        for (int i = 0; i < options.Count; i++) {
+            var optionGO = GameObject.Instantiate(
+                UpgradeOptionPrefab, 
+                new Vector3(-4.5f * (faction.Side == Faction.FactionSide.Right ? -1f : 1f), 1.5f - (i*1.5f),0), 
+                Quaternion.identity);
+            optionGO.GetComponent<UpgradeOption>().Configure(i + 1 + (faction.Side == Faction.FactionSide.Right ? 6 : 0), options[i]);
         }
     }
 
