@@ -74,6 +74,7 @@ public class Battle : MonoBehaviour
             GameObject trumpet = GameObject.Instantiate(trumpetPrefab);
             trumpet.transform.position = new Vector2(FixedValues.UnitSlotDistanceFromCenterX * xMod, unit.transform.position.y - 0.2f);
             trumpet.transform.Find("sprite").GetComponent<SpriteRenderer>().flipX = faction.Side == Faction.FactionSide.Right;
+            trumpet.GetComponent<Trumpet>().SetKey(i + (faction.Side == Faction.FactionSide.Right ? 7 : 1), faction.Side == Faction.FactionSide.Right ? -1f : 0f);
 
             reg.Deploy(unit.GetComponent<Unit>(), trumpet.GetComponent<Trumpet>());
         }

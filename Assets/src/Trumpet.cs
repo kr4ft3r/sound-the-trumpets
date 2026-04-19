@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Trumpet : MonoBehaviour
 {
@@ -11,17 +12,27 @@ public class Trumpet : MonoBehaviour
     GameObject spriteGO;
     SpriteRenderer sprite;
     Animator animator;
+    TextMeshPro key;
     // Start is called before the first frame update
     void Start()
     {
         spriteGO = transform.Find("sprite").gameObject;
         sprite = spriteGO.GetComponent<SpriteRenderer>();
         animator = spriteGO.GetComponent<Animator>();
+        key = transform.Find("number").GetComponent<TextMeshPro>();
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void SetKey(int number, float xMod)
+    {
+        if (number == 10) number = 0;
+        var key = transform.Find("number").GetComponent<TextMeshPro>();
+        key.text = number.ToString();
+        key.transform.localPosition += (Vector3.right * -0.8f * xMod);
     }
 
     public void Blow(float enableTime)
