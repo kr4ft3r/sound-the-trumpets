@@ -12,12 +12,12 @@ public class Regiment
     
     Unit unit;
     Trumpet trumpet;
+    Cannon cannon;
     float startX;
     float speed = FixedValues.BaseUnitSpeed;
     float unitStrength = FixedValues.BaseUnitStrength;
 
     float advancedFromX; // Last position when advance order was given, in ground taken, for determining traversed
-    float cannonFuseTimer = 0;
 
     public List<IRegimentUpgrade> Upgrades = new List<IRegimentUpgrade>();
 
@@ -49,14 +49,19 @@ public class Regiment
         Battle.SignalSent += OnSignalSent;
         startX = unit.transform.position.x;
         advancedFromX = unit.groundTaken;
-        cannonFuseTimer = 0;
+
         Debug.LogWarning("Remember to implement Undeploy");
     }
     public void Undeploy()
     {
         unit = null;
         trumpet = null;
+        this.cannon = null;
         Battle.SignalSent -= OnSignalSent;
+    }
+    public void DeployCannon(Cannon cannon)
+    {
+        this.cannon = cannon;
     }
     public void Engage()
     {
@@ -175,11 +180,35 @@ public class Regiment
     }
     public void UpdateCannon(Battle battle, Regiment targetReg)
     {
-        if (cannonFuseTimer <= 0.00f) return;
+        /*if (cannonFuseTimer <= 0.00f) return;
         cannonFuseTimer -= battle.battleInterval;
         if (cannonFuseTimer > 0.00f) return;
 
-        cannonFuseTimer = 0;
+        cannonFuseTimer = 0;*/
+        if (cannon.EnableTimer > 0.00f)
+        {
+            cannon.EnableTimer -= battle.battleInterval;
+            if (cannon.EnableTimer <= 0.00f)
+            {
+                cannon.Ready();
+            }
+
+            return;
+        }
+        if (cannon.FuseTimer > 0.00f)
+        {
+            cannon.FuseTimer -= battle.battleInterval;
+            if (cannon.FuseTimer <= 0.00f)
+            {
+                cannon.Fired(15.0f);
+            } else
+            {
+                return;
+            }
+        } else
+        {
+            return;
+        }
         Debug.Log("Firing cannon!");
         var moraleDamage = UnityEngine.Random.Range(5f, 10f);
         targetReg.TakeArtilleryDamage(moraleDamage);
@@ -212,7 +241,8 @@ public class Regiment
                 return;
             }
             Debug.Log("Lighting fuse!");
-            cannonFuseTimer = UnityEngine.Random.Range(1.0f, 4.0f);
+            //cannonFuseTimer = UnityEngine.Random.Range(1.0f, 4.0f);
+            cannon.Fuse(UnityEngine.Random.Range(1.0f, 4.0f));
 
             return;
         }

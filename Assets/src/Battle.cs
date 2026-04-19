@@ -21,6 +21,7 @@ public class Battle : MonoBehaviour
 
     GameObject unitPrefab;
     GameObject trumpetPrefab;
+    GameObject cannonPrefab;
     public float battleInterval { get; protected set; } = 0.05f;
     public float timeElapsed { get; protected set; } = 0;
     Coroutine mainCoroutine;
@@ -34,6 +35,7 @@ public class Battle : MonoBehaviour
     {
         unitPrefab = Resources.Load<GameObject>("Prefabs/Unit");
         trumpetPrefab = Resources.Load<GameObject>("Prefabs/Trumpet");
+        cannonPrefab = Resources.Load<GameObject>("Prefabs/Cannon");
     }
 
     // Start is called before the first frame update
@@ -95,6 +97,15 @@ public class Battle : MonoBehaviour
             trumpet.GetComponent<Trumpet>().SetKey(i + (faction.Side == Faction.FactionSide.Right ? 7 : 1), faction.Side == Faction.FactionSide.Right ? -1f : 0f);
 
             reg.Deploy(unit.GetComponent<Unit>(), trumpet.GetComponent<Trumpet>());
+
+            if (reg.HasCannon)
+            {
+                GameObject cannon = GameObject.Instantiate(cannonPrefab);
+                cannon.transform.position = new Vector2((FixedValues.UnitSlotDistanceFromCenterX + 1.5f) * xMod , unit.transform.position.y - 0.2f);
+                cannon.transform.Find("sprite").GetComponent<SpriteRenderer>().flipX = faction.Side == Faction.FactionSide.Right;
+
+                reg.DeployCannon(cannon.GetComponent<Cannon>());
+            }
         }
     }
 

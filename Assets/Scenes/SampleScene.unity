@@ -1204,6 +1204,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  WinsBlueFaction: 0
+  WinsRedFaction: 0
 --- !u!4 &1996557083
 Transform:
   m_ObjectHideFlags: 0
