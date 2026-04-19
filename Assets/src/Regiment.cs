@@ -68,6 +68,10 @@ public class Regiment
         unit.NextState = Unit.UnitState.Fighting;
         unit.ToNextState();
         trumpet.Deactivate();
+        if (HasCannon) 
+        { 
+            cannon.Deactivate(); 
+        }
     }
     public bool IsEngaged()
     {
@@ -240,12 +244,15 @@ public class Regiment
 
                 return;
             }
+            if (cannon.Deactivated) return;
             Debug.Log("Lighting fuse!");
             //cannonFuseTimer = UnityEngine.Random.Range(1.0f, 4.0f);
             cannon.Fuse(UnityEngine.Random.Range(1.0f, 4.0f));
 
             return;
         }
+
+        if (trumpet.Deactivated) return;
 
         switch (unit.State)
         {

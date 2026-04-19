@@ -13,6 +13,7 @@ public class Trumpet : MonoBehaviour
     SpriteRenderer sprite;
     Animator animator;
     TextMeshPro key;
+    public bool Deactivated = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,5 +60,6 @@ public class Trumpet : MonoBehaviour
         //Debug.Log("Deactivate");
         State = TrumpetState.NotReady;
         animator.SetTrigger("TrumpetNotAvailable");
+        Deactivated = true;
     }
 }

@@ -13,6 +13,7 @@ public class Cannon : MonoBehaviour
     GameObject spriteGO;
     SpriteRenderer sprite;
     Animator animator;
+    public bool Deactivated = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +49,7 @@ public class Cannon : MonoBehaviour
         //Debug.Log("Deactivate");
         State = CannonState.NotReady;
         animator.SetTrigger("CannonNotAvailable");
+        Deactivated = true;
     }
 
     // Update is called once per frame
