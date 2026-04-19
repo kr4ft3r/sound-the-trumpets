@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -16,8 +16,20 @@ public class GameManager : MonoBehaviour
 
     Battle battle;
 
+    public static GameManager instance;
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Battle.RoundResolved += OnRoundResolved;
 
         // TODO remove test calls

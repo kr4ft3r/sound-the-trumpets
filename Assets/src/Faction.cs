@@ -18,15 +18,15 @@ public class Faction
         this.Side = side;
 
         if (id == 0) IsHumanPlayer = true; // TODO don't force here
+        LeaderName = leaderName;
 
         InitRegiments();
-        LeaderName = leaderName;
     }
     protected void InitRegiments()
     {
         Regiments = new Regiment[FixedValues.RegimentsPerFaction];
         for (int i = 0; i < FixedValues.RegimentsPerFaction; i++) { 
-            var reg = new Regiment(i + 1, FixedValues.GetFactionColor(ID), Side == FactionSide.Left ? 1f : -1f);
+            var reg = new Regiment(i + 1, FixedValues.GetFactionColor(ID), Side == FactionSide.Left ? 1f : -1f, LeaderName+"'s ");
             Regiments[i] = reg;
             //TODO remove test
             //if (i==3) reg.AssignRandomUpgrade();

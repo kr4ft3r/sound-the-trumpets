@@ -24,12 +24,14 @@ public class Regiment
     public int BonusTrumpetCooldown = 0;
     public int BonusTrumpetDelay = 0;
     public bool HasCannon = false;
+    string prepend;
 
-    public Regiment(int order, Color color, float advanceDirection)
+    public Regiment(int order, Color color, float advanceDirection, string prepend)
     {
         Order = order;
         Color = color;
         this.advanceDirection = advanceDirection;
+        this.prepend = prepend;
     }
     public string GetName()
     {
@@ -38,7 +40,7 @@ public class Regiment
         else if (Order == 2) num = "nd";
         else if (Order == 3) num = "rd";
         
-        return Order+num+" Regiment";
+        return prepend+Order+num+" Regiment";
     }
     public void Deploy(Unit unit,  Trumpet trumpet)
     {
