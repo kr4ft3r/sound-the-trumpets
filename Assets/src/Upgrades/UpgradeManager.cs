@@ -16,10 +16,11 @@ public class UpgradeManager
                 if (activeUpgrade.GetId() == upgradeType.GetId())
                 {
                     foundActive = true;
-                    if (!activeUpgrade.IsStackable() || activeUpgrade.StackLevel() == activeUpgrade.MaxStackLevel())
+                    if (!activeUpgrade.IsStackable() || (activeUpgrade.IsStackable() && activeUpgrade.StackLevel() == activeUpgrade.MaxStackLevel()))
                     {
                         continue;
                     }
+                    Debug.Log("Addin another "+activeUpgrade.GetName());
                     possibleUpgrades.Add(activeUpgrade);
                     continue;
                 }

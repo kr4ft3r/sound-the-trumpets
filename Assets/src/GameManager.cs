@@ -93,8 +93,16 @@ public class GameManager : MonoBehaviour
     void StartNewGame()
     {
         battle.StopUpdates();
+        foreach (Regiment reg in BlueFaction.Regiments)
+        {
+            reg.Undeploy();
+        }
+        foreach (Regiment reg in RedFaction.Regiments)
+        {
+            reg.Undeploy();
+        }
         ResetFactions();
-        battle = null;
+        Destroy(battle);
         SceneManager.LoadScene("IntroScene");
     }
 
@@ -131,8 +139,15 @@ public class GameManager : MonoBehaviour
     IEnumerator BattleEndCoroutine()
     {
         yield return new WaitForSeconds(3.0f);
+        foreach (Regiment reg in BlueFaction.Regiments) {
+            reg.Undeploy();
+        }
+        foreach (Regiment reg in RedFaction.Regiments)
+        {
+            reg.Undeploy();
+        }
         battle.StopUpdates();
-        battle = null;
+        Destroy(battle);
         // Upgrades scene
         SceneManager.LoadScene("UpgradesScene");
     }

@@ -19,6 +19,10 @@ public class UpgradeScreen : MonoBehaviour
     {
         UpgradeOption.RegimentUpgradeSelected += OnRegimentUpgradeSelected;
     }
+    private void OnDestroy()
+    {
+        UpgradeOption.RegimentUpgradeSelected -= OnRegimentUpgradeSelected;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +55,7 @@ public class UpgradeScreen : MonoBehaviour
         int maxOptions = (possible.Count < 3 ? possible.Count : 3);
         var options = new List<IRegimentUpgrade>();
         Debug.Log("Upgrade options max:"+maxOptions);
-        Debug.Log(options);
+        Debug.Log(possible);
         while (options.Count < maxOptions)
         {
             var rndIndex = Random.Range(0, possible.Count);
