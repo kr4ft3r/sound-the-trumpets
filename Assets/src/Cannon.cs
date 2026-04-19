@@ -14,12 +14,17 @@ public class Cannon : MonoBehaviour
     SpriteRenderer sprite;
     Animator animator;
     public bool Deactivated = false;
+
+    public AudioClip ExplosionSound;
+    AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
         spriteGO = transform.Find("sprite").gameObject;
         sprite = spriteGO.GetComponent<SpriteRenderer>();
         animator = spriteGO.GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Fuse(float fuseTime)
@@ -34,6 +39,7 @@ public class Cannon : MonoBehaviour
         FuseTimer = 0;
         EnableTimer = enableTime;
         animator.SetTrigger("CannonNotAvailable");
+        audioSource.PlayOneShot(ExplosionSound);
     }
 
     public void Ready()
