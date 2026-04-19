@@ -41,21 +41,25 @@ public class Battle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BlueFaction.IsHumanPlayer)
+        if (!Resolved)
         {
-            HandleBluePlayerHumanInput();
-        }
-        else
-        {
-            HandleComputerPlayerInput(BlueFaction);
-        }
+            if (BlueFaction.IsHumanPlayer)
+            {
+                HandleBluePlayerHumanInput();
+            }
+            else
+            {
+                HandleComputerPlayerInput(BlueFaction);
+            }
 
-        if (RedFaction.IsHumanPlayer)
-        {
-            HandleRedPlayerHumanInput();
-        } else
-        {
-            HandleComputerPlayerInput(RedFaction);
+            if (RedFaction.IsHumanPlayer)
+            {
+                HandleRedPlayerHumanInput();
+            }
+            else
+            {
+                HandleComputerPlayerInput(RedFaction);
+            }
         }
     }
 

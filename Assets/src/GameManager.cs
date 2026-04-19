@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour
     public AnimationCurve InfantryStrengthCurve;
 
     Faction blueFaction;
+    public Faction BlueFaction {  get { return blueFaction; } }
     Faction redFaction;
+    public Faction RedFaction { get { return redFaction; } }
 
     Battle battle;
 
@@ -72,5 +74,14 @@ public class GameManager : MonoBehaviour
             roundEndText.text = "Round Draw";
             roundEndText.color = Color.white;
         }
+
+        StartCoroutine(BattleEndCoroutine());
+    }
+
+    IEnumerator BattleEndCoroutine()
+    {
+        yield return new WaitForSeconds(3.0f);
+
+        // Upgrades scene
     }
 }
