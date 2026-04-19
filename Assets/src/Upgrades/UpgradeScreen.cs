@@ -28,7 +28,7 @@ public class UpgradeScreen : MonoBehaviour
         DrawUpgradesForFaction(gameManager.BlueFaction);
         DrawUpgradesForFaction(gameManager.RedFaction);
     }
-
+    List<UpgradeOption> allUpgradeOptions = new List<UpgradeOption>();
     void DrawUpgradesForFaction(Faction faction)
     {
         Regiment reg = faction.Regiments[Random.Range(0, FixedValues.RegimentsPerFaction)];
@@ -67,6 +67,7 @@ public class UpgradeScreen : MonoBehaviour
                 Quaternion.identity);
             optionGO.GetComponent<UpgradeOption>().Configure(faction.Side == Faction.FactionSide.Left ? blueTeamRegiment : redTeamRegiment, i + 1 + (faction.Side == Faction.FactionSide.Right ? 6 : 0), options[i]);
             upgradeOptions.Add(optionGO.GetComponent<UpgradeOption>());
+            allUpgradeOptions.Add(optionGO.GetComponent<UpgradeOption>() );
         }
 
         // AI selection
@@ -99,10 +100,31 @@ public class UpgradeScreen : MonoBehaviour
             player2Selected = true;
             upgrade.Apply(redTeamRegiment);
         }
+        foreach (var opt in allUpgradeOptions)
+        {
+            if (opt.Regiment == regiment && opt != upgradeOption)
+            {
+                opt.transform.Find("Key").GetComponent<TextMeshPro>().alpha = 0.2f;
+                opt.transform.Find("Name").GetComponent<TextMeshPro>().alpha = 0.2f;
+                opt.transform.Find("Description").GetComponent<TextMeshPro>().alpha = 0.2f;
+            }
+        }
 
         if (player1Selected && player2Selected)
         {
-            SceneManager.LoadScene("SampleScene");
+            
+            StartCoroutine(UpgradesDone());
         }
+    }
+
+    float doneCounter = 0.0f;
+    IEnumerator UpgradesDone()
+    {
+        while(doneCounter < 1.0f)
+        {
+            doneCounter += 0.1f;
+            yield return new WaitForSeconds(0.1f);
+        }
+        SceneManager.LoadScene("SampleScene");
     }
 }
