@@ -67,7 +67,7 @@ public class UpgradeScreen : MonoBehaviour
         for (int i = 0; i < options.Count; i++) {
             var optionGO = GameObject.Instantiate(
                 UpgradeOptionPrefab, 
-                new Vector3(-4.5f * (faction.Side == Faction.FactionSide.Right ? -1f : 1f), 1.5f - (i*1.5f),0), 
+                new Vector3(-4.5f * (faction.Side == Faction.FactionSide.Right ? -1f : 1f), 1.3f - (i*1.5f),0), 
                 Quaternion.identity);
             optionGO.GetComponent<UpgradeOption>().Configure(faction.Side == Faction.FactionSide.Left ? blueTeamRegiment : redTeamRegiment, i + 1 + (faction.Side == Faction.FactionSide.Right ? 6 : 0), options[i]);
             upgradeOptions.Add(optionGO.GetComponent<UpgradeOption>());
