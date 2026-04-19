@@ -14,6 +14,12 @@ public class UpgradeScreen : MonoBehaviour
     Regiment redTeamRegiment;
     bool player1Selected = false;
     bool player2Selected = false;
+
+    private void Awake()
+    {
+        UpgradeOption.RegimentUpgradeSelected += OnRegimentUpgradeSelected;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +27,6 @@ public class UpgradeScreen : MonoBehaviour
 
         DrawUpgradesForFaction(gameManager.BlueFaction);
         DrawUpgradesForFaction(gameManager.RedFaction);
-
-        UpgradeOption.RegimentUpgradeSelected += OnRegimentUpgradeSelected;
     }
 
     void DrawUpgradesForFaction(Faction faction)
@@ -68,6 +72,7 @@ public class UpgradeScreen : MonoBehaviour
         // AI selection
         if (!faction.IsHumanPlayer)
         {
+            Debug.Log("Computer player " + faction.LeaderName + " is making the choice");
             var rnd = Random.Range(0, options.Count);
             var rndUpgrade = options[rnd];
             UpgradeOption.RegimentUpgradeSelected?.Invoke(faction.Side == Faction.FactionSide.Left ? blueTeamRegiment : redTeamRegiment, upgradeOptions[rnd], rndUpgrade);
@@ -95,7 +100,7 @@ public class UpgradeScreen : MonoBehaviour
             upgrade.Apply(redTeamRegiment);
         }
 
-        if (player1Selected && player1Selected)
+        if (player1Selected && player2Selected)
         {
             SceneManager.LoadScene("SampleScene");
         }
