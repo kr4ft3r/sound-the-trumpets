@@ -14,6 +14,10 @@ public class Trumpet : MonoBehaviour
     Animator animator;
     TextMeshPro key;
     public bool Deactivated = false;
+
+    public AudioClip HornAdvance;
+    public AudioClip HornHold;
+    AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +25,7 @@ public class Trumpet : MonoBehaviour
         sprite = spriteGO.GetComponent<SpriteRenderer>();
         animator = spriteGO.GetComponent<Animator>();
         key = transform.Find("number").GetComponent<TextMeshPro>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -61,5 +66,14 @@ public class Trumpet : MonoBehaviour
         State = TrumpetState.NotReady;
         animator.SetTrigger("TrumpetNotAvailable");
         Deactivated = true;
+    }
+
+    public void PlayAdvance()
+    {
+        audioSource.PlayOneShot(HornAdvance);
+    }
+    public void PlayHold()
+    {
+        audioSource.PlayOneShot(HornHold);
     }
 }

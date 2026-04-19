@@ -263,11 +263,13 @@ public class Regiment
         {
             case Unit.UnitState.Holding:
                 unit.NextState = Unit.UnitState.Advancing;
+                trumpet.PlayAdvance();
                 advancedFromX = unit.groundTaken;
                 // TODO sounds
                 break;
             case Unit.UnitState.Advancing:
                 unit.NextState = Unit.UnitState.Holding;
+                trumpet.PlayHold();
                 break;
         }
         unit.NextStateTimer = FixedValues.BaseTrumpetDelay - (FixedValues.BaseTrumpetDelay * (BonusTrumpetDelay * 0.01f));
