@@ -17,13 +17,13 @@ public class Faction
         ID = id;
         this.Side = side;
 
-        //IsHumanPlayer = false;
-        if (id == 0) IsHumanPlayer = true; // TODO don't force here
+        IsHumanPlayer = false;
+        //if (id == 0) IsHumanPlayer = true; // TODO don't force here
         LeaderName = leaderName;
 
         InitRegiments();
     }
-    protected void InitRegiments()
+    public void InitRegiments()
     {
         Regiments = new Regiment[FixedValues.RegimentsPerFaction];
         for (int i = 0; i < FixedValues.RegimentsPerFaction; i++) { 

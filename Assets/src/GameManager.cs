@@ -46,6 +46,14 @@ public class GameManager : MonoBehaviour
         WinsRedFaction = 0;
     }
 
+    public void ResetFactions()
+    {
+        WinsBlueFaction = 0;
+        WinsRedFaction = 0;
+        blueFaction.InitRegiments();
+        redFaction.InitRegiments();
+    }
+
     public void StartBattle()
     {
         if (battle) Destroy(battle);
@@ -63,7 +71,31 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (blueFaction != null && redFaction != null)
+        {
+            bool startNewGame = false;
+            if (!blueFaction.IsHumanPlayer && Input.GetKeyUp(KeyCode.Alpha1))
+            {
+                if (!redFaction.IsHumanPlayer) startNewGame = true;
+                blueFaction.IsHumanPlayer = true;
+                
+            }
+            if (!redFaction.IsHumanPlayer && Input.GetKeyUp(KeyCode.Alpha0))
+            {
+                if (!blueFaction.IsHumanPlayer) startNewGame = true;
+                redFaction.IsHumanPlayer = true;
+            }
+
+            if (startNewGame) StartNewGame();
+        }
+    }
+
+    void StartNewGame()
+    {
+        battle.StopUpdates();
+        ResetFactions();
+        battle = null;
+        SceneManager.LoadScene("IntroScene");
     }
 
     void OnRoundResolved(bool hasWinner, Faction winningFaction)

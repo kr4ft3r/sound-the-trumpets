@@ -41,6 +41,22 @@ public class Battle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (BlueFaction.IsHumanPlayer)
+        {
+            GameObject.Find("BlueGeneral").transform.Find("Join").GetComponent<TextMeshPro>().alpha = 0;
+        } else
+        {
+            GameObject.Find("BlueGeneral").transform.Find("Join").GetComponent<TextMeshPro>().alpha = 1;
+        }
+        if (RedFaction.IsHumanPlayer)
+        {
+            GameObject.Find("RedGeneral").transform.Find("Join").GetComponent<TextMeshPro>().alpha = 0;
+        }
+        else
+        {
+            GameObject.Find("RedGeneral").transform.Find("Join").GetComponent<TextMeshPro>().alpha = 1;
+        }
+
         SpawnFaction(BlueFaction);
         SpawnFaction(RedFaction);
 
