@@ -11,7 +11,8 @@ public class Faction
     public Regiment[] Regiments;
     public bool IsHumanPlayer = false;
     public float TimeUntilComputerDecision = 0;
-    public Faction(int id, FactionSide side)
+    public string LeaderName;
+    public Faction(int id, FactionSide side, string leaderName)
     {
         ID = id;
         this.Side = side;
@@ -19,6 +20,7 @@ public class Faction
         if (id == 0) IsHumanPlayer = true; // TODO don't force here
 
         InitRegiments();
+        LeaderName = leaderName;
     }
     protected void InitRegiments()
     {

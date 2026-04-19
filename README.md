@@ -7,4 +7,5 @@ All code and assets except fonts created by me during the 48 hours of Ludum Dare
 ## Other Credits
 
 - Eazygoin font by Neutronio Games https://neutroniogames.itch.io/font-eazygoin
+- Olde Tome font by Lady Liefy https://ladyliefy.itch.io/olde-tome
 

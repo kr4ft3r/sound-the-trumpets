@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,14 +15,15 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Battle.RoundResolved += OnRoundResolved;
 
         // TODO remove test calls
         InitFactions();
     }
     public void InitFactions()
     {
-        blueFaction = new Faction(0, Faction.FactionSide.Left);
-        redFaction = new Faction(1, Faction.FactionSide.Right);
+        blueFaction = new Faction(0, Faction.FactionSide.Left, "Prince Blue");
+        redFaction = new Faction(1, Faction.FactionSide.Right, "Prince Red");
     }
 
     public void StartBattle()
@@ -36,6 +38,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         // TODO remove test calls
         StartBattle();
     }
@@ -44,5 +48,29 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void OnRoundResolved(bool hasWinner, Faction winningFaction)
+    {
+        var overlay = GameObject.Find("RoundEndOverlay").transform.Find("Screen").gameObject;
+        overlay.SetActive(true);
+        TextMeshPro roundEndText = overlay.transform.Find("Declaration").GetComponent<TextMeshPro>();
+        if (hasWinner)
+        {
+            roundEndText.text = winningFaction.LeaderName + " Wins";
+            Color textColor;
+            if (winningFaction.ID == 0)
+            {
+                ColorUtility.TryParseHtmlString("#2B75C3", out textColor);
+            } else
+            {
+                ColorUtility.TryParseHtmlString("#8A1D00", out textColor);
+            }
+            roundEndText.color = textColor;
+        } else
+        {
+            roundEndText.text = "Round Draw";
+            roundEndText.color = Color.white;
+        }
     }
 }

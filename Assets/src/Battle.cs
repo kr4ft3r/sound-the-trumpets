@@ -9,10 +9,14 @@ public class Battle : MonoBehaviour
     public static System.Action<Regiment, Faction, bool> SignalSent;
     public static System.Action<Regiment, Faction, bool> SignalReceived;
 
+    public static System.Action<bool, Faction> RoundResolved;
+
     public AnimationCurve InfantryStrengthCurve;
 
     public Faction BlueFaction;
     public Faction RedFaction;
+
+    public bool Resolved = false;
 
     GameObject unitPrefab;
     GameObject trumpetPrefab;
@@ -108,9 +112,12 @@ public class Battle : MonoBehaviour
             reg.UpdateBattleState(this);
         }
     }
-
+    int winningBlue = 0;
+    int winningRed = 0;
+    int stalemates = 0;
     void UpdateCombats()
     {
+        
         for (int i = 0; i < FixedValues.RegimentsPerFaction; i++)
         {
             var leftReg = BlueFaction.Regiments[i];
@@ -138,19 +145,43 @@ public class Battle : MonoBehaviour
                     {
                         leftReg.Pursue(Mathf.Abs(leftRelativeDiff));
                         rightReg.Retreat(Mathf.Abs(leftRelativeDiff));
+                        winningBlue++;
                     }
                     else if (leftRelativeDiff < 0)
                     {
                         leftReg.Retreat(Mathf.Abs(leftRelativeDiff));
                         rightReg.Pursue(Mathf.Abs(leftRelativeDiff));
+                        winningRed++;
                     }
                     else
                     {
                         // Stalemate
+                        stalemates++;
                     }
                     Debug.Log(leftRelativeDiff);
                 }
             }
+        }
+
+        // Round end conditions
+        if (!Resolved && (winningBlue + winningRed + stalemates) == 4)
+        {
+            // Resolved
+            Debug.Log(" R E S O L V E D ");
+            Resolved = true;
+            if (winningBlue > winningRed)
+            {
+                RoundResolved?.Invoke(true, BlueFaction);
+            } else if (winningRed > winningBlue)
+            {
+                RoundResolved?.Invoke(true, RedFaction);
+            } else
+            {
+                RoundResolved?.Invoke(false, BlueFaction);
+            }
+        } else if (!Resolved)
+        {
+            Debug.Log(winningBlue + "+" + winningRed + "+" + stalemates);
         }
     }
 
